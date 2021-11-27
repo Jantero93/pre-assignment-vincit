@@ -1,0 +1,18 @@
+{
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": ["javascript", "typescript"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.workingDirectories": [
+    "./client",
+    "./server"
+  ],
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
