@@ -4,6 +4,7 @@
       :selectedTab="this.$data.selectedTab"
       @clickedTab="handleClickedTab"
     />
+    <MainContent />
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import { defineComponent } from 'vue';
 
 import Navbar from './components/Navbar.vue';
+import MainContent from './components/MainContent.vue';
 
 interface ComponentState {
   selectedTab: string;
@@ -19,6 +21,7 @@ interface ComponentState {
 export default defineComponent({
   name: 'App',
   components: {
+    MainContent,
     Navbar
   },
   data() {

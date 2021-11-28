@@ -1,24 +1,19 @@
 <template>
   <nav class="navbar">
     <a
-      v-bind:class="{ active: selectedTab === 'item1' }"
-      @click="tabClicked('item1')"
-      >item1</a
+      v-bind:class="{ active: selectedTab === 'application' }"
+      @click="tabClicked('application')"
+      >Application</a
     >
     <a
-      v-bind:class="{ active: selectedTab === 'item2' }"
-      @click="tabClicked('item2')"
-      >item2</a
+      v-bind:class="{ active: selectedTab === 'description' }"
+      @click="tabClicked('description')"
+      >Description</a
     >
     <a
-      v-bind:class="{ active: selectedTab === 'item3' }"
-      @click="tabClicked('item3')"
-      >item3</a
-    >
-    <a
-      v-bind:class="{ active: selectedTab === 'item4' }"
-      @click="tabClicked('item4')"
-      >item4</a
+      v-bind:class="{ active: selectedTab === 'about' }"
+      @click="tabClicked('about')"
+      >About me</a
     >
   </nav>
 </template>
@@ -44,7 +39,7 @@ export default defineComponent({
 
 <style>
 .navbar {
-  background-color: rgb(53, 53, 53);
+  background-color: #353535;
   overflow: hidden;
   position: fixed;
   top: 0px;
@@ -65,6 +60,6 @@ export default defineComponent({
 }
 
 .navbar a.active {
-  background-color: black;
+  background-color: #000000;
 }
 </style>
