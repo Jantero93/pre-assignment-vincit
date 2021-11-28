@@ -44,15 +44,17 @@ export default defineComponent({
   position: fixed;
   top: 0px;
   width: 100%;
+  height: 56px;
 }
 
 .navbar a {
-  float: left;
-  display: block;
+  cursor: pointer;
   color: #14c28e;
-  text-align: center;
-  padding: 1em 1em;
+  display: block;
+  float: left;
   font-size: 18px;
+  padding: 1em 1em;
+  text-align: center;
 }
 
 .navbar a:hover {

@@ -4,15 +4,19 @@
       :selectedTab="this.$data.selectedTab"
       @clickedTab="handleClickedTab"
     />
-    <MainContent />
+    <MainContent v-if="selectedTab === 'application'" />
+    <Description v-if="selectedTab === 'description'" />
+    <About v-if="selectedTab === 'about'" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import Navbar from './components/Navbar.vue';
+import About from './components/pages/About.vue';
+import Description from './components/pages/Description.vue';
 import MainContent from './components/MainContent.vue';
+import Navbar from './components/Navbar.vue';
 
 interface ComponentState {
   selectedTab: string;
@@ -21,12 +25,14 @@ interface ComponentState {
 export default defineComponent({
   name: 'App',
   components: {
+    About,
+    Description,
     MainContent,
-    Navbar
+    Navbar,
   },
   data() {
     return {
-      selectedTab: 'item1'
+      selectedTab: 'application'
     } as ComponentState;
   },
   methods: {
@@ -39,7 +45,9 @@ export default defineComponent({
 
 <style>
 body {
+  padding-top: 56px;
   margin: 0;
   font-family: 'Courier New', Courier, monospace;
+  background-color: rgb(29, 29, 29)
 }
 </style>
