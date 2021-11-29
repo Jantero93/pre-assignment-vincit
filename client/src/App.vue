@@ -15,7 +15,7 @@ import { defineComponent } from 'vue';
 
 import About from './components/pages/About.vue';
 import Description from './components/pages/Description.vue';
-import MainContent from './components/MainContent.vue';
+import MainContent from './components/pages/MainContent.vue';
 import Navbar from './components/Navbar.vue';
 
 interface ComponentState {

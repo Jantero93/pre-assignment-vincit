@@ -19,9 +19,9 @@
     </div>
 
     <div class="content">
-      <div v-if="activetab === '1'" class="tabcontent"></div>
-      <div v-if="activetab === '2'" class="tabcontent"></div>
-      <div v-if="activetab === '3'" class="tabcontent"></div>
+      <LongestDownward v-if="activetab === '1'" class="tabcontent" />
+      <HighestTradingVolume v-if="activetab === '2'" class="tabcontent" />
+      <TimeMachine v-if="activetab === '3'" class="tabcontent" />
     </div>
   </div>
 </template>
@@ -29,12 +29,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+import HighestTradingVolume from '../tabs/HighestTradingVolume.vue';
+import LongestDownward from '../tabs/LongestDownward.vue';
+import TimeMachine from '../tabs/TimeMachine.vue';
+
+
 interface ComponentState {
   activetab: string;
 }
 
 export default defineComponent({
   name: 'MainContent',
+  components: {
+    HighestTradingVolume,
+    LongestDownward,
+    TimeMachine
+  },
   data() {
     return {
       activetab: '1'

@@ -6,7 +6,7 @@ describe('Navigation bar states', () => {
     cy.contains('a', 'Application').should(
       'have.css',
       'background-color',
-      'rgba(0, 0, 0, 0)'
+      'rgb(0, 0, 0)'
     );
   });
 
