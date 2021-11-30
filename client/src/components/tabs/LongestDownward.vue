@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ParsedDate, dateParser, isStartBeforeEnd } from '../../utils/date';
 
 interface ComponentState {
   startingDate: string;
@@ -56,7 +57,11 @@ export default defineComponent({
         : (this.$data.endingDate = target.value);
     },
     handleSubmit(): void {
-      console.log('submit');
+      if (isStartBeforeEnd(this.$data.startingDate, this.$data.endingDate)) {
+        console.log('oli ennen');
+      }
+      const parsedStartDate: ParsedDate = dateParser(this.$data.startingDate);
+      const parsedEndDate: ParsedDate = dateParser(this.$data.endingDate);
     }
   }
 });
