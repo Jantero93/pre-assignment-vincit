@@ -1,23 +1,23 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="input-form">
+  <form class="input-form" @submit.prevent="handleSubmit">
     <div class="date-input-row">
       <p>
         <label for="start-date">Starting date</label>
         <input
-          @change="dateChanged"
           id="start-date"
           v-model="startingDate"
           type="date"
+          @change="dateChanged"
         />
       </p>
 
       <p>
         <label for="end-date">Ending date</label>
         <input
-          @change="dateChanged"
           id="end-date"
           v-model="endingDate"
           type="date"
+          @change="dateChanged"
         />
       </p>
       <p class="second-row">
@@ -68,8 +68,7 @@ export default defineComponent({
 }
 
 .date-input-row * {
-  padding-right: 0.5em;
-  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .date-input-row {

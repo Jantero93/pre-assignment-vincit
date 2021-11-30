@@ -1,13 +1,13 @@
 <template>
-<div class="content">Time machine</div>
+  <div class="content">Time machine</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'TimeMachine',
-})
+  name: 'TimeMachine'
+});
 </script>
 
 <style scoped>

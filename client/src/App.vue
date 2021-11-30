@@ -1,12 +1,7 @@
 <template>
   <div id="app">
-    <Navbar
-      :selectedTab="this.$data.selectedTab"
-      @clickedTab="handleClickedTab"
-    />
-    <MainContent v-if="selectedTab === 'application'" />
-    <Description v-if="selectedTab === 'description'" />
-    <About v-if="selectedTab === 'about'" />
+    <Navbar :selected-tab="$data.selectedTab" @clickedTab="handleClickedTab" />
+    <Component :is="selectedTab" />
   </div>
 </template>
 
@@ -28,11 +23,11 @@ export default defineComponent({
     About,
     Description,
     MainContent,
-    Navbar,
+    Navbar
   },
   data() {
     return {
-      selectedTab: 'application'
+      selectedTab: 'MainContent'
     } as ComponentState;
   },
   methods: {
@@ -48,6 +43,6 @@ body {
   padding-top: 56px;
   margin: 0;
   font-family: 'Courier New', Courier, monospace;
-  background-color: rgb(29, 29, 29)
+  background-color: rgb(29, 29, 29);
 }
 </style>

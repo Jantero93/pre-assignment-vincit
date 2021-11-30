@@ -1,18 +1,18 @@
 <template>
   <nav class="navbar">
     <a
-      v-bind:class="{ active: selectedTab === 'application' }"
-      @click="tabClicked('application')"
+      :class="{ active: selectedTab === 'MainContent' }"
+      @click="$emit('clickedTab', 'MainContent')"
       >Application</a
     >
     <a
-      v-bind:class="{ active: selectedTab === 'description' }"
-      @click="tabClicked('description')"
+      :class="{ active: selectedTab === 'Description' }"
+      @click="$emit('clickedTab', 'Description')"
       >Description</a
     >
     <a
-      v-bind:class="{ active: selectedTab === 'about' }"
-      @click="tabClicked('about')"
+      :class="{ active: selectedTab === 'About' }"
+      @click="$emit('clickedTab', 'About')"
       >About me</a
     >
   </nav>
@@ -29,11 +29,7 @@ export default defineComponent({
       required: true
     }
   },
-  methods: {
-    tabClicked(tabName: string): void {
-      this.$emit('clickedTab', tabName);
-    }
-  }
+  emits: ['clickedTab']
 });
 </script>
 

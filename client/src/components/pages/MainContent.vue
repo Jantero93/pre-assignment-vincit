@@ -2,27 +2,23 @@
   <div id="tabs" class="container">
     <div class="tabs">
       <a
-        v-on:click="activetab = '1'"
-        v-bind:class="{ active: activetab === '1' }"
+        :class="{ active: activetab === 'LongestDownward' }"
+        @click="activetab = 'LongestDownward'"
         >The longest bearish trend</a
       >
       <a
-        v-on:click="activetab = '2'"
-        v-bind:class="{ active: activetab === '2' }"
+        :class="{ active: activetab === 'HighestTradingVolume' }"
+        @click="activetab = 'HighestTradingVolume'"
         >Highest trading volume</a
       >
       <a
-        v-on:click="activetab = '3'"
-        v-bind:class="{ active: activetab === '3' }"
+        :class="{ active: activetab === 'TimeMachine' }"
+        @click="activetab = 'TimeMachine'"
         >Time machine
       </a>
     </div>
 
-    <div class="content">
-      <LongestDownward v-if="activetab === '1'" class="tabcontent" />
-      <HighestTradingVolume v-if="activetab === '2'" class="tabcontent" />
-      <TimeMachine v-if="activetab === '3'" class="tabcontent" />
-    </div>
+    <Component :is="$data.activetab" class="tabcontent" />
   </div>
 </template>
 
@@ -32,7 +28,6 @@ import { defineComponent } from 'vue';
 import HighestTradingVolume from '../tabs/HighestTradingVolume.vue';
 import LongestDownward from '../tabs/LongestDownward.vue';
 import TimeMachine from '../tabs/TimeMachine.vue';
-
 
 interface ComponentState {
   activetab: string;
@@ -47,7 +42,7 @@ export default defineComponent({
   },
   data() {
     return {
-      activetab: '1'
+      activetab: 'LongestDownward'
     } as ComponentState;
   }
 });
@@ -85,7 +80,6 @@ export default defineComponent({
   border-right: 1px solid rgb(99, 99, 99);
 }
 
-/* Styling for active tab */
 .tabs a.active {
   background-color: black;
   cursor: default;

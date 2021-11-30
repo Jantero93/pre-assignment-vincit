@@ -1,13 +1,13 @@
 <template>
-<div class="content"> HighestTradingVolume</div>
+  <div class="content">HighestTradingVolume</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'HighestTradingVolume',
-})
+  name: 'HighestTradingVolume'
+});
 </script>
 
 <style scoped>
