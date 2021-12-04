@@ -1,5 +1,5 @@
 import app from './app';
-import config from './config';
+import config from './utils/config';
 import { createServer, Server } from 'http';
 
 const server: Server = createServer(app);

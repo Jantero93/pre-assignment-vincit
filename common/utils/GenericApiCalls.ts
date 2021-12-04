@@ -17,13 +17,9 @@ export const post = async <B, T>(
   return response;
 };
 
-export const getList = async <B, T>(
-  endpoint: string,
-  body: B
-): Promise<ApiResponse<T>[]> => {
+export const get = async <T>(endpoint: string): Promise<ApiResponse<T>[]> => {
   const request = await fetch(endpoint, {
-    method: 'GET',
-    body: JSON.stringify(body)
+    method: 'GET'
   });
 
   const response = await request.json();
