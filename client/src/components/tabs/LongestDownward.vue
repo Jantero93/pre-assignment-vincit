@@ -32,11 +32,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { onMounted } from 'vue';
-import { ParsedDate, dateParser, isStartBeforeEnd } from '../../utils/date';
+import { isStartBeforeEnd } from '../../utils/date';
+
 import { get } from 'common';
 
-interface ComponentState {
+interface State {
   startingDate: string;
   endingDate: string;
   result?: string;
@@ -44,29 +44,28 @@ interface ComponentState {
 
 export default defineComponent({
   name: 'LongestDownward',
-  setup() {
-    onMounted(() => get('localhost'));
-  },
   data() {
     return {
       startingDate: new Date().toISOString().substr(0, 10),
-      endingDate: new Date().toISOString().substr(0, 10)
-    } as ComponentState;
+      endingDate: new Date().toISOString().substr(0, 10),
+      result: undefined
+    } as State;
   },
   methods: {
     dateChanged(e: Event): void {
       const target: HTMLInputElement = e.target as HTMLInputElement;
 
       target.id === 'start-date'
-        ? (this.$data.startingDate = target.value)
-        : (this.$data.endingDate = target.value);
+        ? (this.startingDate = target.value)
+        : (this.endingDate = target.value);
     },
-    handleSubmit(): void {
-      if (isStartBeforeEnd(this.$data.startingDate, this.$data.endingDate)) {
+    async handleSubmit(): Promise<void> {
+      if (isStartBeforeEnd(this.startingDate, this.endingDate)) {
         console.log('oli ennen');
       }
-      const parsedStartDate: ParsedDate = dateParser(this.$data.startingDate);
-      const parsedEndDate: ParsedDate = dateParser(this.$data.endingDate);
+      const link = `http://localhost:8000/api/bitcoin/downwardtrend?startDate=${this.startingDate}&endDate=${this.endingDate}`;
+      const response = await get(link);
+      console.log(`response`, response);
     }
   }
 });

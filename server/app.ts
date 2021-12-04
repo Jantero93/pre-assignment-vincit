@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import cors from 'cors';
 
 /** Middleware */
 import { requestLogger } from './utils/middleware';
@@ -10,6 +11,7 @@ import { unknownEndpoint } from './utils/unknownEndpoint';
 
 const app: Application = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(
   express.urlencoded({
