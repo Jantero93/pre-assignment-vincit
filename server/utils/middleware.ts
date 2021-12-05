@@ -6,9 +6,11 @@ export const requestLogger = (
   _response: Response,
   next: NextFunction
 ): void => {
+  logger.info('Timestamp ', new Date().toLocaleTimeString());
   logger.info('Method: ', request.method);
   logger.info('Path: ', request.path);
   logger.info('Body: ', request.body);
+  logger.info('Queries', request.query);
   logger.info('---');
   next();
 };

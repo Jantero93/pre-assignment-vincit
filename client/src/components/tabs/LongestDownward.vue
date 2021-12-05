@@ -32,9 +32,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { isStartBeforeEnd } from '../../utils/date';
 
-import { get } from 'common';
+/** Utilities */
+import { isStartBeforeEnd } from '../../utils/date';
+import { getLongestDownward } from './../../services/BitcoinService';
 
 interface State {
   startingDate: string;
@@ -53,18 +54,20 @@ export default defineComponent({
   },
   methods: {
     dateChanged(e: Event): void {
-      const target: HTMLInputElement = e.target as HTMLInputElement;
+      const dateInput: HTMLInputElement = e.target as HTMLInputElement;
 
-      target.id === 'start-date'
-        ? (this.startingDate = target.value)
-        : (this.endingDate = target.value);
+      dateInput.id === 'start-date'
+        ? (this.startingDate = dateInput.value)
+        : (this.endingDate = dateInput.value);
     },
     async handleSubmit(): Promise<void> {
-      if (isStartBeforeEnd(this.startingDate, this.endingDate)) {
-        console.log('oli ennen');
+      if (!isStartBeforeEnd(this.startingDate, this.endingDate)) {
+        console.error('end date before start date');
       }
-      const link = `http://localhost:8000/api/bitcoin/downwardtrend?startDate=${this.startingDate}&endDate=${this.endingDate}`;
-      const response = await get(link);
+      const response: any = await getLongestDownward(
+        this.startingDate,
+        this.endingDate
+      );
       console.log(`response`, response);
     }
   }
