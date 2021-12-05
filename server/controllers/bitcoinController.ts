@@ -1,21 +1,33 @@
+import BitcoinService from '../services/bitcoinService';
+import logger from '../utils/logger';
 import { Response, Request, Router } from 'express';
 
 const API_BITCOIN: string = '/api/bitcoin';
 
-const controller: Router = Router();
+const Controller: Router = Router();
 
-controller.get(`${API_BITCOIN}/test`, (_req: Request, res: Response) => {
-  res.send('infinity money');
-});
-
-controller.get(
+Controller.get(
   `${API_BITCOIN}/downwardtrend`,
-  (req: Request, res: Response) => {
-    console.log(`req.query`, req.query);
-    res.status(200).send({ success: 'yes!' });
+  (req: Request, res: Response): void => {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      res.status(422).send({ error: 'Invalid query' });
+      logger.error('Invalid query at /bitcoin/downwardtrend', req.query);
+      return;
+    }
+
+    try {
+      BitcoinService.longestDownwardTrend(
+        startDate as string,
+        endDate as string
+      );
+      res.status(200).send({ success: 'yes!' });
+    } catch (error) {
+      res.status(503).send(`Bitcoin API can't handle request`);
+      logger.error(error);
+    }
   }
 );
 
-controller.get('');
-
-export default controller;
+export default Controller;

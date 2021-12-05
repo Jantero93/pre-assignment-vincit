@@ -60,11 +60,12 @@ export default defineComponent({
         ? (this.startingDate = dateInput.value)
         : (this.endingDate = dateInput.value);
     },
+
     async handleSubmit(): Promise<void> {
       if (!isStartBeforeEnd(this.startingDate, this.endingDate)) {
         console.error('end date before start date');
       }
-      const response: any = await getLongestDownward(
+      const response: unknown = await getLongestDownward(
         this.startingDate,
         this.endingDate
       );

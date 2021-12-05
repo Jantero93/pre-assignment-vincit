@@ -1,10 +1,9 @@
-const placeHolderFunction1 = (): void => console.log('placeholder1');
-
-const placeHolderFunction2 = (): void => console.log('placeholder1');
+const longestDownwardTrend = (startDate: string, endDate: string): void => {
+  console.log('service bitcoin s ', startDate, ' e ', endDate);
+};
 
 const BitcoinService = {
-  placeHolderFunction1,
-  placeHolderFunction2
+  longestDownwardTrend
 };
 
 export default BitcoinService;
