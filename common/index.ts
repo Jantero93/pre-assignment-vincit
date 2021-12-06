@@ -1,1 +1,1 @@
-export { get, post } from './utils/GenericApiCalls';
+export { get, post, ApiResponse } from './utils/GenericApiCalls';

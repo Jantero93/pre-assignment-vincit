@@ -34,7 +34,7 @@
 import { defineComponent } from 'vue';
 
 /** Utilities */
-import { isStartBeforeEnd } from '../../utils/date';
+import { isDatesValid } from '../../utils/date';
 import { getLongestDownward } from './../../services/BitcoinService';
 
 interface State {
@@ -62,7 +62,7 @@ export default defineComponent({
     },
 
     async handleSubmit(): Promise<void> {
-      if (!isStartBeforeEnd(this.startingDate, this.endingDate)) {
+      if (!isDatesValid(this.startingDate, this.endingDate)) {
         console.error('end date before start date');
       }
       const response: unknown = await getLongestDownward(
