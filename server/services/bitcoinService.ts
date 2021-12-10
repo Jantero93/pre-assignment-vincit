@@ -1,26 +1,31 @@
 import CoinGecko from 'coingecko-api';
-
 import moment from 'moment';
 
+/** Utils */
 import { convertDateRangeUnixMidnight } from '../utils/dates';
+import { closestBitCoinTime } from '../utils/math';
+export interface ICoinResponse {
+  success: boolean;
+  message: string;
+  code: number;
+  data: {
+    prices: number[][];
+    market_caps: number[][];
+    total_volumes: number[][];
+  };
+}
+
+export interface BitcoinPrice {
+  time: number;
+  price: number;
+}
 
 const longestDownwardTrend = async (
   startDate: string,
   endDate: string
 ): Promise<void> => {
-  interface ICoinResponse {
-    success: boolean;
-    message: string;
-    code: number;
-    data: {
-      prices: number[][];
-      market_caps: number[][];
-      total_volumes: number[][];
-    };
-  }
-
   if (moment(startDate).isAfter(moment(endDate)))
-    throw `End date begins before start date`;
+    throw new Error(`End date begins before start date`);
 
   // get all days 00:00 AM time in UNIX
   const unixDatesOnRange: number[] = convertDateRangeUnixMidnight(
@@ -33,13 +38,39 @@ const longestDownwardTrend = async (
   const response: ICoinResponse =
     await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
       vs_currency: 'eur',
-      from: unixDatesOnRange[0],
-      to: unixDatesOnRange[unixDatesOnRange.length - 1]
+      // CoinGecko takes parameter UNIX time in s but returns UNIX time in ms
+      from: unixDatesOnRange[0] / 1000,
+      to:
+        moment(unixDatesOnRange[unixDatesOnRange.length - 1])
+          .add(1, 'hours')
+          .valueOf() / 1000
     });
 
-  if (!response.success) throw `Geckocoin api couldn't handle request`;
+  if (!response.success)
+    throw new Error(`Geckocoin api couldn't handle request`);
+
+  const bitcoinPrices: BitcoinPrice[] = response.data.prices.map(
+    ([time, price]) => ({
+      time,
+      price
+    })
+  );
+
+  const closestStart: BitcoinPrice = closestBitCoinTime(
+    bitcoinPrices,
+    unixDatesOnRange[0]
+  );
+
+  const closestEnd: BitcoinPrice = closestBitCoinTime(
+    bitcoinPrices,
+    unixDatesOnRange[unixDatesOnRange.length - 1]
+  );
 
   console.log(`unixDatesOnRange`, unixDatesOnRange);
+  console.log(`response eka`, bitcoinPrices[0]);
+  console.log('vika ', bitcoinPrices[bitcoinPrices.length - 1]);
+  console.log(`closestStart`, closestStart);
+  console.log(`closestEnd`, closestEnd);
 };
 
 const BitcoinService = {

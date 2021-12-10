@@ -10,8 +10,8 @@ export const convertDateRangeUnixMidnight = (
 
   const unixDatesOnRange: number[] = [];
 
-  while (start.isSameOrBefore(end)) {
-    unixDatesOnRange.push(start.utc().unix());
+  while (start.isBefore(end)) {
+    unixDatesOnRange.push(start.utc().valueOf());
     start.add(1, 'days');
   }
 
