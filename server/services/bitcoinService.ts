@@ -1,6 +1,8 @@
+import CoinGecko from 'coingecko-api';
+
 import moment from 'moment';
 
-import CoinGecko from 'coingecko-api';
+import { convertDateRangeUnixMidnight } from '../utils/dates';
 
 const longestDownwardTrend = async (
   startDate: string,
@@ -11,30 +13,33 @@ const longestDownwardTrend = async (
     message: string;
     code: number;
     data: {
-      prices: Array<Array<number>>;
-      market_caps: Array<Array<number>>;
-      total_volumes: Array<Array<number>>;
+      prices: number[][];
+      market_caps: number[][];
+      total_volumes: number[][];
     };
   }
 
+  if (moment(startDate).isAfter(moment(endDate)))
+    throw `End date begins before start date`;
+
+  // get all days 00:00 AM time in UNIX
+  const unixDatesOnRange: number[] = convertDateRangeUnixMidnight(
+    startDate,
+    endDate
+  );
+
   const CoinGeckoClient = new CoinGecko();
-  const start = moment.utc(startDate);
-  const end = moment.utc(endDate);
-  const diffDays: number = end.diff(start, 'days');
 
   const response: ICoinResponse =
     await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
       vs_currency: 'eur',
-      from: start.unix(),
-      to: end.unix()
+      from: unixDatesOnRange[0],
+      to: unixDatesOnRange[unixDatesOnRange.length - 1]
     });
 
   if (!response.success) throw `Geckocoin api couldn't handle request`;
 
-  console.log(`response`, response);
-  console.log(`diffDays`, diffDays);
-  console.log(`start`, start.unix());
-  console.log(`end`, end.unix());
+  console.log(`unixDatesOnRange`, unixDatesOnRange);
 };
 
 const BitcoinService = {
