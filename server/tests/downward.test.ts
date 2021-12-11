@@ -1,4 +1,4 @@
-import { BitcoinPrice } from '../services/bitcoinService';
+import { BitcoinPrice } from 'common';
 
 import * as mockUpData from './mockupTestData';
 import {

@@ -1,6 +1,6 @@
 import BitcoinService from '../services/bitcoinService';
 import logger from '../utils/logger';
-import { Response, Request, Router } from 'express';
+import { Response, Request, Router, NextFunction } from 'express';
 
 import { BitcoinPrice } from 'common';
 
@@ -10,7 +10,7 @@ const Controller: Router = Router();
 
 Controller.get(
   `${API_BITCOIN}/downwardtrend`,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
@@ -27,8 +27,7 @@ Controller.get(
         );
       res.status(200).send(response);
     } catch (error) {
-      res.status(503).send(`Bitcoin API can't handle request`);
-      logger.error(error);
+      next(error);
     }
   }
 );

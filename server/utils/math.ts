@@ -31,6 +31,12 @@ export const findLongestDecreasingSubArray = (
 
   // Traverse array from second element (compare to previous)
   for (let i = 1; i < arrayToSearch.length; i++) {
+    //  arrayToSearch[i - 1].price > arrayToSearch[i].price
+    //  ? currentArray.push(arrayToSearch[i])
+    // : maxArray.length < currentArray.length
+    // ? (maxArray = currentArray)
+    // : (currentArray = [arrayToSearch[i]]);
+
     // If current price same or lower than previous --> add to current array
     if (arrayToSearch[i - 1].price > arrayToSearch[i].price) {
       currentArray.push(arrayToSearch[i]);

@@ -1,4 +1,4 @@
-import { BitcoinPrice } from '../services/bitcoinService';
+import { BitcoinPrice } from 'common';
 
 export const testData_1: BitcoinPrice[] = [
   { price: 321, time: 222 },
