@@ -2,16 +2,18 @@ import { BitcoinPrice } from '../services/bitcoinService';
 
 /**
  * Find closest price from array.
- * @param bitcoinPrices Given BitcoinPrices array
+ * @param bitcoinPrices Given Bitcoin prices array
  * @param timeToMatch Target time (UNIX ms)
- * @returns BitCoin price, which time is closest to the target
+ * @returns Bitcoin price, which time is closest to the target
  */
 export const closestBitCoinTime = (
   bitcoinPrices: BitcoinPrice[],
   timeToMatch: number
 ): BitcoinPrice =>
-  bitcoinPrices.reduce((a, b) =>
-    Math.abs(b.time - timeToMatch) < Math.abs(a.time - timeToMatch) ? b : a
+  bitcoinPrices.reduce((prev, curr) =>
+    Math.abs(curr.time - timeToMatch) < Math.abs(prev.time - timeToMatch)
+      ? curr
+      : prev
   );
 
 /**
@@ -29,11 +31,11 @@ export const findLongestDecreasingSubArray = (
 
   // Traverse array from second element (compare to previous)
   for (let i = 1; i < arrayToSearch.length; i++) {
-    // If current price same or lower --> increase current array
-    if (arrayToSearch[i - 1].price >= arrayToSearch[i].price) {
+    // If current price same or lower than previous --> add to current array
+    if (arrayToSearch[i - 1].price > arrayToSearch[i].price) {
       currentArray.push(arrayToSearch[i]);
     } else {
-      // If current array is longer than max --> update
+      // If current array is longer than max --> update max array
       if (maxArray.length < currentArray.length) {
         maxArray = currentArray;
       }
@@ -45,6 +47,5 @@ export const findLongestDecreasingSubArray = (
   // Compare current and max array after last element comparing
   if (maxArray.length < currentArray.length) maxArray = currentArray;
 
-  // required maximum length
   return maxArray;
 };
