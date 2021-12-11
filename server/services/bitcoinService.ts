@@ -3,7 +3,10 @@ import moment from 'moment';
 
 /** Utils */
 import { convertDateRangeUnixMidnight } from '../utils/dates';
-import { closestBitCoinTime } from '../utils/math';
+import {
+  closestBitCoinTime,
+  findLongestDecreasingSubArray
+} from '../utils/math';
 export interface ICoinResponse {
   success: boolean;
   message: string;
@@ -66,11 +69,25 @@ const longestDownwardTrend = async (
     unixDatesOnRange[unixDatesOnRange.length - 1]
   );
 
+  const mockUparray: BitcoinPrice[] = [
+    { price: 321, time: 222 },
+    { price: 999, time: 256 },
+    { price: 888, time: 300 },
+    { price: 888, time: 402 },
+    { price: 111, time: 402 }
+  ];
+
+  const bitcoinpricesNight: BitcoinPrice[] = unixDatesOnRange.map(
+    (date: number) => closestBitCoinTime(bitcoinPrices, date)
+  );
+
   console.log(`unixDatesOnRange`, unixDatesOnRange);
   console.log(`response eka`, bitcoinPrices[0]);
   console.log('vika ', bitcoinPrices[bitcoinPrices.length - 1]);
   console.log(`closestStart`, closestStart);
   console.log(`closestEnd`, closestEnd);
+  console.log(`findSub`, findLongestDecreasingSubArray(mockUparray));
+  console.log(`bitcoinpricesNight`, bitcoinpricesNight);
 };
 
 const BitcoinService = {
