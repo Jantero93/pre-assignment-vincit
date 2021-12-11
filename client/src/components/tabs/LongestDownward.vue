@@ -25,7 +25,7 @@
       </p>
     </div>
     <div>
-      {{ 'Longest bearish trend was 5 days between 01.01.2020 - 02.02.2020' }}
+      {{ resultMessage }}
     </div>
   </form>
 </template>
@@ -34,23 +34,35 @@
 import { defineComponent } from 'vue';
 
 /** Utilities */
-import { isStartBeforeEnd } from '../../utils/date';
 import { getLongestDownward } from './../../services/BitcoinService';
+import { formatDate, isStartBeforeEnd } from '../../utils/date';
+
+/** Types */
+import { BitcoinPrice } from 'common';
 
 interface State {
   startingDate: string;
   endingDate: string;
-  result?: string;
+  result?: BitcoinPrice[];
 }
 
 export default defineComponent({
   name: 'LongestDownward',
   data() {
     return {
-      startingDate: new Date().toISOString().substr(0, 10),
-      endingDate: new Date().toISOString().substr(0, 10),
+      startingDate: formatDate('YYYY-MM-DD'),
+      endingDate: formatDate('YYYY-MM-DD'),
       result: undefined
     } as State;
+  },
+  computed: {
+    resultMessage(): string {
+      return !this.result
+        ? ''
+        : !this.result.length
+        ? `No downward trend for inputs from ${this.startingDate} and to ${this.endingDate}`
+        : `In bitcoin's historical data from CoinGecko, the price decreased ${this.result.length} days in a row for the inputs from ${this.startingDate} and to ${this.endingDate}`;
+    }
   },
   methods: {
     dateChanged(e: Event): void {
@@ -60,16 +72,16 @@ export default defineComponent({
         ? (this.startingDate = dateInput.value)
         : (this.endingDate = dateInput.value);
     },
-
     async handleSubmit(): Promise<void> {
       if (!isStartBeforeEnd(this.startingDate, this.endingDate)) {
-        console.error('end date before start date');
+        alert('Invalid date input');
+        return;
       }
-      const response: unknown = await getLongestDownward(
+
+      this.result = (await getLongestDownward(
         this.startingDate,
         this.endingDate
-      );
-      console.log(`response`, response);
+      )) as BitcoinPrice[];
     }
   }
 });

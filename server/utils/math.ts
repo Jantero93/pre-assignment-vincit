@@ -1,4 +1,4 @@
-import { BitcoinPrice } from '../services/bitcoinService';
+import { BitcoinPrice } from 'common';
 
 /**
  * Find closest price from array.

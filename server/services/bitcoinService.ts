@@ -1,8 +1,13 @@
 import CoinGecko from 'coingecko-api';
 import moment from 'moment';
 
+import { BitcoinPrice } from 'common';
+
 /** Utils */
-import { convertDateRangeUnixMidnight } from '../utils/dates';
+import {
+  convertDateRangeUnixMidnight,
+  roundToClosestDayUnix
+} from '../utils/dates';
 import {
   closestBitCoinTime,
   findLongestDecreasingSubArray
@@ -18,18 +23,10 @@ export interface ICoinResponse {
   };
 }
 
-export interface BitcoinPrice {
-  time: number;
-  price: number;
-}
-
 const longestDownwardTrend = async (
   startDate: string,
   endDate: string
-): Promise<void> => {
-  if (moment(startDate).isAfter(moment(endDate)))
-    throw new Error(`End date begins before start date`);
-
+): Promise<BitcoinPrice[]> => {
   // get all days 00:00 AM time in UNIX
   const unixDatesOnRange: number[] = convertDateRangeUnixMidnight(
     startDate,
@@ -49,15 +46,28 @@ const longestDownwardTrend = async (
           .valueOf() / 1000
     });
 
-  if (!response.success)
-    throw new Error(`Geckocoin api couldn't handle request`);
-
   const bitcoinPrices: BitcoinPrice[] = response.data.prices.map(
     ([time, price]) => ({
       time,
       price
     })
   );
+
+  const midnightCoinPrices: BitcoinPrice[] = unixDatesOnRange.map(
+    (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
+  );
+
+  const subArrayPrices: BitcoinPrice[] =
+    findLongestDecreasingSubArray(midnightCoinPrices);
+
+  // One price is not trend, send empty array for easier frontend handling
+  if (subArrayPrices.length === 1) return [];
+
+  // Replace unix times rounded to closest 00:00
+  return subArrayPrices.map((bitcoin: BitcoinPrice) => ({
+    ...bitcoin,
+    time: roundToClosestDayUnix(bitcoin.time)
+  }));
 };
 
 const BitcoinService = {
