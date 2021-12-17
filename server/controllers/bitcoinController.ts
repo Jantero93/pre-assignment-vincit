@@ -32,4 +32,22 @@ Controller.get(
   }
 );
 
+Controller.get(
+  `${API_BITCOIN}/highesttradingvolume`,
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      res.status(422).send({ error: 'Invalid query' });
+      logger.error('Invalid query at /bitcoin/highesttradinvolume', req.query);
+      return;
+    }
+
+    await BitcoinService.highestTradingVolume(
+      startDate as string,
+      endDate as string
+    );
+  }
+);
+
 export default Controller;

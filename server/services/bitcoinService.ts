@@ -1,7 +1,8 @@
-import CoinGecko from 'coingecko-api';
-import moment from 'moment';
+/** Services */
+import GeckocoinService from './geckoCoinService';
 
-import { BitcoinPrice } from 'common';
+/** Types */
+import { BitcoinPrice, BitcoinVolume } from 'common';
 
 /** Utils */
 import {
@@ -10,6 +11,7 @@ import {
 } from '../utils/dates';
 import {
   closestBitCoinTime,
+  getTotalVolumeFromDay,
   findLongestDecreasingSubArray
 } from '../utils/math';
 export interface ICoinResponse {
@@ -27,32 +29,15 @@ const longestDownwardTrend = async (
   startDate: string,
   endDate: string
 ): Promise<BitcoinPrice[]> => {
-  // get all days 00:00 AM time in UNIX
   const unixDatesOnRange: number[] = convertDateRangeUnixMidnight(
     startDate,
     endDate
   );
 
-  const CoinGeckoClient = new CoinGecko();
+  const bitcoinPrices: BitcoinPrice[] =
+    await GeckocoinService.getBitcoinPricesWithinDate(startDate, endDate);
 
-  const response: ICoinResponse =
-    await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
-      vs_currency: 'eur',
-      // CoinGecko takes parameter UNIX time in s but returns UNIX time in ms
-      from: unixDatesOnRange[0] / 1000,
-      to:
-        moment(unixDatesOnRange[unixDatesOnRange.length - 1])
-          .add(1, 'hours')
-          .valueOf() / 1000
-    });
-
-  const bitcoinPrices: BitcoinPrice[] = response.data.prices.map(
-    ([time, price]) => ({
-      time,
-      price
-    })
-  );
-
+  // Find closest midnight price per day
   const midnightCoinPrices: BitcoinPrice[] = unixDatesOnRange.map(
     (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
   );
@@ -60,7 +45,7 @@ const longestDownwardTrend = async (
   const subArrayPrices: BitcoinPrice[] =
     findLongestDecreasingSubArray(midnightCoinPrices);
 
-  // One price is not trend, send empty array for easier frontend handling
+  // One price is not trend, send empty array for indicating no subarray found
   if (subArrayPrices.length === 1) return [];
 
   // Replace unix times rounded to closest 00:00
@@ -70,7 +55,21 @@ const longestDownwardTrend = async (
   }));
 };
 
+const highestTradingVolume = async (
+  startDate: string,
+  endDate: string
+): Promise<void> => {
+  const volumeArray: BitcoinVolume[] = await GeckocoinService.getBitcoinVolume(
+    startDate,
+    endDate
+  );
+
+  const totalVolumesEachDay: BitcoinVolume[] =
+    getTotalVolumeFromDay(volumeArray);
+  console.log('placeholder services', totalVolumesEachDay[0]);
+};
 const BitcoinService = {
+  highestTradingVolume,
   longestDownwardTrend
 };
 
