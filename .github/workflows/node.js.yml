@@ -1,0 +1,44 @@
+name: CI
+
+env:
+  CI: false
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [15.x]
+        
+    steps:
+      - uses: actions/checkout@v1
+
+      # Install and compile common resources
+      - name: Install common
+        run: cd common/ && npm ci
+
+      # Server related runs
+      - name: Install server
+        run: cd server/ && npm ci 
+      - name: Test server
+        run: npm --prefix server/ test        
+
+      # Client related runs
+      - name: Install client
+        run: cd client/ && npm ci
+      - name: Test client
+        run: npm --prefix client/ run test:e2e
