@@ -64,10 +64,17 @@ const highestTradingVolume = async (
     endDate
   );
 
-  const totalVolumesEachDay: BitcoinVolume[] =
-    getTotalVolumeFromDay(volumeArray);
-  console.log('placeholder services', totalVolumesEachDay[0]);
+  console.log(`volumeArray.length`, volumeArray.length);
+
+  const volumeEachDay: BitcoinVolume[] = convertDateRangeUnixMidnight(
+    startDate,
+    endDate
+  ).map((date: number) => getTotalVolumeFromDay(volumeArray, date));
+
+  console.log(`volumeEachDay`, volumeEachDay);
+  console.log(`volumeEachDay.length`, volumeEachDay.length);
 };
+
 const BitcoinService = {
   highestTradingVolume,
   longestDownwardTrend
