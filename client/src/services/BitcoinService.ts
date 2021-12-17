@@ -7,3 +7,12 @@ export const getLongestDownward = (
   endDate: string
 ): Promise<ApiResponse<BitcoinPrice[]>> =>
   get(`${BASE_URL}/downwardtrend?startDate=${startDate}&endDate=${endDate}`);
+
+export const getHighestTradingVolume = (
+  startDate: string,
+  endDate: string
+  // eslint-disable-next-line
+): Promise<any> =>
+  get(
+    `${BASE_URL}/highesttradingvolume?startDate=${startDate}&endDate=${endDate}`
+  );

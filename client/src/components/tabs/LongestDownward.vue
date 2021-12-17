@@ -1,7 +1,7 @@
 <template>
   <div>
     <DateForm @dateSubmitted="handleDateSubmit" />
-    <div>{{ printedResult }}</div>
+    <div v-text="printedResult"></div>
   </div>
 </template>
 

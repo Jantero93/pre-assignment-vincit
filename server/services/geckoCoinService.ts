@@ -1,8 +1,12 @@
 import CoinGecko from 'coingecko-api';
+
+/** Types */
 import { BitcoinPrice, BitcoinVolume } from 'common';
-import moment from 'moment';
-import { convertDateRangeUnixMidnight } from '../utils/dates';
 import { ICoinResponse } from './bitcoinService';
+
+/** Utils */
+import { convertDateRangeUnixMidnight } from '../utils/dates';
+import moment from 'moment';
 
 const getBitcoinPricesWithinDate = async (
   startDate: string,
@@ -32,7 +36,6 @@ const getBitcoinPricesWithinDate = async (
   })) as BitcoinPrice[];
 };
 
-/** tulee väärät ajat */
 const getBitcoinVolume = async (
   startDate: string,
   endDate: string
@@ -42,23 +45,16 @@ const getBitcoinVolume = async (
   const response: ICoinResponse =
     await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
       vs_currency: 'eur',
-      from: moment(startDate).utc().startOf('day').unix(),
-      to: moment(endDate).add(1, 'hours').unix()
+      from: moment.utc(startDate).unix(),
+      to: moment.utc(endDate).endOf('days').add(1, 'hours').unix()
     });
 
-  console.log(
-    `moment(startDate).utc()`,
-    moment(startDate).utc().startOf('day').unix()
-  );
-  console.log(
-    `vika`,
-    response.data.total_volumes[response.data.total_volumes.length - 1]
-  );
   return response.data.total_volumes.map(([time, volume]) => ({
     time,
     volume
   })) as BitcoinVolume[];
 };
+
 const GeckocoinService = {
   getBitcoinPricesWithinDate,
   getBitcoinVolume
