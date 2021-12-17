@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 
 /** Middleware */
-import { requestLogger } from './utils/middleware';
+import { errorHandler, requestLogger } from './utils/middleware';
 
 import bitcoinController from './controllers/bitcoinController';
 import defaultController from './controllers/defaultController';
@@ -23,6 +23,8 @@ app.use(requestLogger);
 
 app.use(defaultController);
 app.use(bitcoinController);
+
 app.use(unknownEndpoint);
+app.use(errorHandler);
 
 export default app;

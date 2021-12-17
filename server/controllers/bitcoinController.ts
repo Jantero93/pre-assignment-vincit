@@ -1,6 +1,8 @@
 import BitcoinService from '../services/bitcoinService';
 import logger from '../utils/logger';
-import { Response, Request, Router } from 'express';
+import { Response, Request, Router, NextFunction } from 'express';
+
+import { BitcoinPrice } from 'common';
 
 const API_BITCOIN: string = '/api/bitcoin';
 
@@ -8,7 +10,7 @@ const Controller: Router = Router();
 
 Controller.get(
   `${API_BITCOIN}/downwardtrend`,
-  (req: Request, res: Response): void => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { startDate, endDate } = req.query;
 
     if (!startDate || !endDate) {
@@ -18,15 +20,33 @@ Controller.get(
     }
 
     try {
-      BitcoinService.longestDownwardTrend(
-        startDate as string,
-        endDate as string
-      );
-      res.status(200).send({ success: 'yes!' });
+      const response: BitcoinPrice[] =
+        await BitcoinService.longestDownwardTrend(
+          startDate as string,
+          endDate as string
+        );
+      res.status(200).send(response);
     } catch (error) {
-      res.status(503).send(`Bitcoin API can't handle request`);
-      logger.error(error);
+      next(error);
     }
+  }
+);
+
+Controller.get(
+  `${API_BITCOIN}/highesttradingvolume`,
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      res.status(422).send({ error: 'Invalid query' });
+      logger.error('Invalid query at /bitcoin/highesttradinvolume', req.query);
+      return;
+    }
+
+    await BitcoinService.highestTradingVolume(
+      startDate as string,
+      endDate as string
+    );
   }
 );
 

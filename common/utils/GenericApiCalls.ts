@@ -4,7 +4,7 @@ export interface ApiResponse<T> {
   data?: T;
 }
 
-export const get = async <T>(endpoint: string): Promise<ApiResponse<T>[]> => {
+export const get = async <T>(endpoint: string): Promise<ApiResponse<T>> => {
   const request = await fetch(endpoint, {
     method: 'GET'
   });

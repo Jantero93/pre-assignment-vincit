@@ -1,10 +1,17 @@
-import CoinGecko from 'coingecko-api';
-import moment from 'moment';
+/** Services */
+import GeckocoinService from './geckoCoinService';
+
+/** Types */
+import { BitcoinPrice, BitcoinVolume } from 'common';
 
 /** Utils */
-import { convertDateRangeUnixMidnight } from '../utils/dates';
+import {
+  convertDateRangeUnixMidnight,
+  roundToClosestDayUnix
+} from '../utils/dates';
 import {
   closestBitCoinTime,
+  getTotalVolumeFromDay,
   findLongestDecreasingSubArray
 } from '../utils/math';
 export interface ICoinResponse {
@@ -18,79 +25,51 @@ export interface ICoinResponse {
   };
 }
 
-export interface BitcoinPrice {
-  time: number;
-  price: number;
-}
-
 const longestDownwardTrend = async (
   startDate: string,
   endDate: string
-): Promise<void> => {
-  if (moment(startDate).isAfter(moment(endDate)))
-    throw new Error(`End date begins before start date`);
-
-  // get all days 00:00 AM time in UNIX
+): Promise<BitcoinPrice[]> => {
   const unixDatesOnRange: number[] = convertDateRangeUnixMidnight(
     startDate,
     endDate
   );
 
-  const CoinGeckoClient = new CoinGecko();
+  const bitcoinPrices: BitcoinPrice[] =
+    await GeckocoinService.getBitcoinPricesWithinDate(startDate, endDate);
 
-  const response: ICoinResponse =
-    await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
-      vs_currency: 'eur',
-      // CoinGecko takes parameter UNIX time in s but returns UNIX time in ms
-      from: unixDatesOnRange[0] / 1000,
-      to:
-        moment(unixDatesOnRange[unixDatesOnRange.length - 1])
-          .add(1, 'hours')
-          .valueOf() / 1000
-    });
-
-  if (!response.success)
-    throw new Error(`Geckocoin api couldn't handle request`);
-
-  const bitcoinPrices: BitcoinPrice[] = response.data.prices.map(
-    ([time, price]) => ({
-      time,
-      price
-    })
+  // Find closest midnight price per day
+  const midnightCoinPrices: BitcoinPrice[] = unixDatesOnRange.map(
+    (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
   );
 
-  const closestStart: BitcoinPrice = closestBitCoinTime(
-    bitcoinPrices,
-    unixDatesOnRange[0]
-  );
+  const subArrayPrices: BitcoinPrice[] =
+    findLongestDecreasingSubArray(midnightCoinPrices);
 
-  const closestEnd: BitcoinPrice = closestBitCoinTime(
-    bitcoinPrices,
-    unixDatesOnRange[unixDatesOnRange.length - 1]
-  );
+  // One price is not trend, send empty array for indicating no subarray found
+  if (subArrayPrices.length === 1) return [];
 
-  const mockUparray: BitcoinPrice[] = [
-    { price: 321, time: 222 },
-    { price: 999, time: 256 },
-    { price: 888, time: 300 },
-    { price: 888, time: 402 },
-    { price: 111, time: 402 }
-  ];
-
-  const bitcoinpricesNight: BitcoinPrice[] = unixDatesOnRange.map(
-    (date: number) => closestBitCoinTime(bitcoinPrices, date)
-  );
-
-  console.log(`unixDatesOnRange`, unixDatesOnRange);
-  console.log(`response eka`, bitcoinPrices[0]);
-  console.log('vika ', bitcoinPrices[bitcoinPrices.length - 1]);
-  console.log(`closestStart`, closestStart);
-  console.log(`closestEnd`, closestEnd);
-  console.log(`findSub`, findLongestDecreasingSubArray(mockUparray));
-  console.log(`bitcoinpricesNight`, bitcoinpricesNight);
+  // Replace unix times rounded to closest 00:00
+  return subArrayPrices.map((bitcoin: BitcoinPrice) => ({
+    ...bitcoin,
+    time: roundToClosestDayUnix(bitcoin.time)
+  }));
 };
 
+const highestTradingVolume = async (
+  startDate: string,
+  endDate: string
+): Promise<void> => {
+  const volumeArray: BitcoinVolume[] = await GeckocoinService.getBitcoinVolume(
+    startDate,
+    endDate
+  );
+
+  const totalVolumesEachDay: BitcoinVolume[] =
+    getTotalVolumeFromDay(volumeArray);
+  console.log('placeholder services', totalVolumesEachDay[0]);
+};
 const BitcoinService = {
+  highestTradingVolume,
   longestDownwardTrend
 };
 

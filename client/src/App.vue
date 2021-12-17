@@ -13,7 +13,7 @@ import Description from './components/pages/Description.vue';
 import MainContent from './components/pages/MainContent.vue';
 import Navbar from './components/Navbar.vue';
 
-interface ComponentState {
+interface State {
   selectedTab: string;
 }
 
@@ -28,7 +28,7 @@ export default defineComponent({
   data() {
     return {
       selectedTab: 'MainContent'
-    } as ComponentState;
+    } as State;
   },
   methods: {
     handleClickedTab(clickedTab: string): void {

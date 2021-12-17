@@ -17,3 +17,6 @@ export const convertDateRangeUnixMidnight = (
 
   return unixDatesOnRange;
 };
+
+export const roundToClosestDayUnix = (unixTime: number): number =>
+  moment.utc(unixTime).add(12, 'hours').startOf('day').valueOf();

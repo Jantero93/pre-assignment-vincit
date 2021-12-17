@@ -1,75 +1,46 @@
 <template>
-  <form class="input-form" @submit.prevent="handleSubmit">
-    <div class="date-input-row">
-      <p>
-        <label for="start-date">Starting date</label>
-        <input
-          id="start-date"
-          v-model="startingDate"
-          type="date"
-          @change="dateChanged"
-        />
-      </p>
-
-      <p>
-        <label for="end-date">Ending date</label>
-        <input
-          id="end-date"
-          v-model="endingDate"
-          type="date"
-          @change="dateChanged"
-        />
-      </p>
-      <p class="second-row">
-        <input type="submit" value="Submit" />
-      </p>
-    </div>
-    <div>
-      {{ 'Longest bearish trend was 5 days between 01.01.2020 - 02.02.2020' }}
-    </div>
-  </form>
+  <div>
+    <DateForm @dateSubmitted="handleDateSubmit" />
+    <div v-text="printedResult"></div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+/** Components */
+import DateForm from '../DateForm.vue';
+
 /** Utilities */
-import { isDatesValid } from '../../utils/date';
 import { getLongestDownward } from './../../services/BitcoinService';
 
+/** Types */
+import { BitcoinPrice } from 'common';
+
 interface State {
-  startingDate: string;
-  endingDate: string;
-  result?: string;
+  printedResult: string;
 }
 
 export default defineComponent({
   name: 'LongestDownward',
+  components: {
+    DateForm
+  },
   data() {
     return {
-      startingDate: new Date().toISOString().substr(0, 10),
-      endingDate: new Date().toISOString().substr(0, 10),
-      result: undefined
+      printedResult: ''
     } as State;
   },
   methods: {
-    dateChanged(e: Event): void {
-      const dateInput: HTMLInputElement = e.target as HTMLInputElement;
+    async handleDateSubmit(startingDate: string, endingDate: string) {
+      const result: BitcoinPrice[] = (await getLongestDownward(
+        startingDate,
+        endingDate
+      )) as BitcoinPrice[];
 
-      dateInput.id === 'start-date'
-        ? (this.startingDate = dateInput.value)
-        : (this.endingDate = dateInput.value);
-    },
-
-    async handleSubmit(): Promise<void> {
-      if (!isDatesValid(this.startingDate, this.endingDate)) {
-        console.error('end date before start date');
-      }
-      const response: unknown = await getLongestDownward(
-        this.startingDate,
-        this.endingDate
-      );
-      console.log(`response`, response);
+      this.printedResult = !result.length
+        ? `No downward trend for inputs from ${startingDate} and to ${endingDate}`
+        : `In bitcoin's historical data from CoinGecko, the price decreased ${result.length} days in a row for the inputs from ${startingDate} and to ${endingDate}`;
     }
   }
 });
