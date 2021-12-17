@@ -64,9 +64,11 @@ const highestTradingVolume = async (
     endDate
   );
 
-  const totalVolumesEachDay: BitcoinVolume[] =
-    getTotalVolumeFromDay(volumeArray);
-  console.log('placeholder services', totalVolumesEachDay[0]);
+  const totalVolumesEachDay: BitcoinVolume = getTotalVolumeFromDay(
+    volumeArray,
+    startDate
+  );
+  console.log('placeholder services', totalVolumesEachDay);
 };
 const BitcoinService = {
   highestTradingVolume,

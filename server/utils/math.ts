@@ -1,4 +1,5 @@
 import { BitcoinPrice, BitcoinVolume } from 'common';
+import moment from 'moment';
 
 /**
  * Find closest price from array.
@@ -24,7 +25,7 @@ export const closestBitCoinTime = (
 export const findLongestDecreasingSubArray = (
   arrayToSearch: BitcoinPrice[]
 ): BitcoinPrice[] => {
-  if (!arrayToSearch.length) return [];
+  if (!arrayToSearch?.length) return [];
 
   let maxArray: BitcoinPrice[] = [arrayToSearch[0]];
   let currentArray: BitcoinPrice[] = [arrayToSearch[0]];
@@ -50,9 +51,21 @@ export const findLongestDecreasingSubArray = (
   return maxArray;
 };
 
+/**
+ * Calculates total volume of given day in bitcoin volume array
+ * @param volumeArray Array of bitcoin volumes
+ * @param date Which date total volume calculated
+ * @returns total bitcoin volume on given day
+ */
 export const getTotalVolumeFromDay = (
-  volumeArray: BitcoinVolume[]
-): BitcoinVolume[] => {
-  console.log('volumeArray', volumeArray);
-  return volumeArray;
+  volumeArray: BitcoinVolume[],
+  date: string
+): BitcoinVolume => {
+  const daysVolume: BitcoinVolume = volumeArray
+    .filter((bitcoin: BitcoinVolume) =>
+      moment(bitcoin.time).isSame(date, 'days')
+    )
+    .reduce((prev, curr) => ({ ...curr, volume: prev.volume + curr.volume }));
+
+  return daysVolume;
 };
