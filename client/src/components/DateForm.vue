@@ -75,4 +75,8 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
 }
+
+.second-row {
+  margin-top: auto;
+}
 </style>
