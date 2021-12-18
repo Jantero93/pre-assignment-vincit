@@ -1,19 +1,25 @@
 <template>
-  <q-header elevated class="bg-primary text-white" height-hint="98">
+  <q-header elevated class="bg-orange-10">
     <q-toolbar>
-      <q-toolbar-title class="nav-bar"> Vincit pre-assignment </q-toolbar-title>
+      <q-toolbar-title class="nav-bar">Vincit pre-assignment</q-toolbar-title>
     </q-toolbar>
 
-    <q-tabs align="left">
-      <q-route-tab
+    <q-tabs v-model="activeTabFromProp" align="center">
+      <q-tab
+        name="MainContent"
         label="Main Content"
         @click="$emit('clickedTab', 'MainContent')"
       />
-      <q-route-tab
+      <q-tab
+        name="Description"
         label="Description"
         @click="$emit('clickedTab', 'Description')"
       />
-      <q-route-tab label="About" @click="$emit('clickedTab', 'About')" />
+      <q-tab
+        name="About"
+        label="About"
+        @click="$emit('clickedTab', 'About')"
+      />
     </q-tabs>
   </q-header>
 </template>
@@ -29,12 +35,17 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['clickedTab']
+  emits: ['clickedTab'],
+  computed: {
+    activeTabFromProp(): string {
+      return this.$props.selectedTab;
+    }
+  }
 });
 </script>
 
 <style>
 .nav-bar {
-  font-size: 175%;
+  text-align: center;
 }
 </style>

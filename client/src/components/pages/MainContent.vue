@@ -1,25 +1,27 @@
 <template>
-  <div id="q-app" style="min-height: 100vh">
-    <div class="q-pa-md">
-      <div class="q-gutter-y-md" style="max-width: 800px">
+    <div class="row justify-center">
         <q-card bordered>
-          <q-tabs dense class="bg-grey-3" align="justify" narrow-indicator>
+          <q-tabs v-model="activetab" class="bg-grey-4" align="justify">
             <q-tab
+              name="LongestDownward"
               label="Longest Downward Trend"
               @click="activetab = 'LongestDownward'"
             />
             <q-tab
+              name="HighestTradingVolume"
               label="Highest Trading Volume"
               @click="activetab = 'HighestTradingVolume'"
             />
-            <q-tab label="Time Machine" @click="activetab = 'TimeMachine'" />
+            <q-tab
+              name="TimeMachine"
+              label="Time Machine"
+              @click="activetab = 'TimeMachine'"
+            />
           </q-tabs>
 
           <Component :is="$data.activetab" class="tabcontent" />
         </q-card>
-      </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -49,46 +51,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.container {
-  max-width: 1000px;
-  min-width: 600px;
-  margin: 3em auto;
-  font-size: 1em;
-  color: #888;
-}
-
-/* Style the tabs */
-.tabs {
-  overflow: hidden;
-  margin-left: 24px;
-}
-
-.tabs a {
-  float: left;
-  cursor: pointer;
-  padding: 12px 24px;
-  border: 1px solid rgb(99, 99, 99);
-  border-right: none;
-  background-color: #353535;
-  color: #14c28e;
-
-  border-radius: 10px 10px 0 0;
-  font-weight: bold;
-}
-
-.tabs a:last-child {
-  border-right: 1px solid rgb(99, 99, 99);
-}
-
-.tabs a.active {
-  background-color: black;
-  cursor: default;
-}
-
-/* Style the tab content */
 .tabcontent {
-  padding: 30px 50px;
-  border: 1px solid rgb(99, 99, 99);
-  border-radius: 10px;
+  padding: 2em 3em;
+  overflow: hidden;
 }
 </style>
