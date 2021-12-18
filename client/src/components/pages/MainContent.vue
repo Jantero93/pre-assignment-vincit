@@ -1,24 +1,49 @@
 <template>
-  <div id="tabs" class="container">
-    <div class="tabs">
-      <a
-        :class="{ active: activetab === 'LongestDownward' }"
-        @click="activetab = 'LongestDownward'"
-        >The longest bearish trend</a
-      >
-      <a
-        :class="{ active: activetab === 'HighestTradingVolume' }"
-        @click="activetab = 'HighestTradingVolume'"
-        >Highest trading volume</a
-      >
-      <a
-        :class="{ active: activetab === 'TimeMachine' }"
-        @click="activetab = 'TimeMachine'"
-        >Time machine
-      </a>
-    </div>
+  <div id="q-app" style="min-height: 100vh">
+    <div class="q-pa-md">
+      <div class="q-gutter-y-md" style="max-width: 600px">
+        <q-card>
+          <q-tabs
+            v-model="tab"
+            dense
+            class="bg-grey-3"
+            align="justify"
+            narrow-indicator
+          >
+            <q-tab
+              label="Longest Downward Trend"
+              @click="activetab = 'LongestDownward'"
+            ></q-tab>
+            <q-tab
+              label="Highest Trading Volume"
+              @click="activetab = 'HighestTradingVolume'"
+            ></q-tab>
+            <q-tab
+              label="Time Machine"
+              @click="activetab = 'TimeMachine'"
+            ></q-tab>
+          </q-tabs>
+          <q-tab-panels v-model="selectedTab" animated>
+            <q-tab-panel name="mails">
+              <div class="text-h6">Mails</div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </q-tab-panel>
 
-    <Component :is="$data.activetab" class="tabcontent" />
+            <q-tab-panel name="alarms">
+              <div class="text-h6">Alarms</div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </q-tab-panel>
+
+            <q-tab-panel name="movies">
+              <div class="text-h6">Movies</div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </q-tab-panel>
+          </q-tab-panels>
+
+          <Component :is="$data.activetab" class="tabcontent" />
+        </q-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -90,6 +115,5 @@ export default defineComponent({
   padding: 30px 50px;
   border: 1px solid rgb(99, 99, 99);
   border-radius: 10px;
-  background-color: black;
 }
 </style>

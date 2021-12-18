@@ -1,8 +1,13 @@
 <template>
-  <div id="app">
-    <Navbar :selected-tab="$data.selectedTab" @clickedTab="handleClickedTab" />
-    <Component :is="selectedTab" />
-  </div>
+  <q-layout view="hHh lpR fFf">
+
+   <Navbar :selected-tab="$data.selectedTab" @clickedTab="handleClickedTab" />
+   
+    <q-page-container>
+      <router-view />
+      <Component :is="selectedTab" />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script lang="ts">
@@ -42,7 +47,5 @@ export default defineComponent({
 body {
   padding-top: 56px;
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
-  background-color: rgb(29, 29, 29);
 }
 </style>

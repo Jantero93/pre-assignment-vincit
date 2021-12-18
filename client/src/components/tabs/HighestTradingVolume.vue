@@ -1,7 +1,7 @@
 <template>
   <div>
     <DateForm @dateSubmitted="handleDateSubmit" />
-    <div v-text="printedResult"></div>
+    <div>{{ 'Highest Volume' }}</div>
   </div>
 </template>
 
