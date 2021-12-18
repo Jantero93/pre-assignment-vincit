@@ -1,7 +1,7 @@
 <template>
   <div>
     <DateForm @dateSubmitted="handleDateSubmit" />
-    <div v-text="printedResult"></div>
+    <div class="result-text" v-text="printedResult"></div>
   </div>
 </template>
 
@@ -47,16 +47,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.input-form {
-  color: rgb(167, 167, 167);
-}
-
-.date-input-row * {
-  padding-right: 1em;
-}
-
-.date-input-row {
-  display: flex;
-  flex-direction: row;
+.result-text {
+  word-break: break-all;
 }
 </style>

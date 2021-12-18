@@ -8,6 +8,19 @@ import { ICoinResponse } from './bitcoinService';
 import { convertDateRangeUnixMidnight } from '../utils/dates';
 import moment from 'moment';
 
+const geckocoinResponse = async (
+  start: string | number,
+  end: string | number
+): Promise<ICoinResponse> => {
+  const CoinGeckoClient = new CoinGecko();
+
+  return await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
+    vs_currency: 'eur',
+    from: moment.utc(start).unix(),
+    to: moment.utc(end).endOf('days').add(1, 'hours').unix()
+  });
+};
+
 const getBitcoinPricesWithinDate = async (
   startDate: string,
   endDate: string
@@ -17,18 +30,10 @@ const getBitcoinPricesWithinDate = async (
     endDate
   );
 
-  const CoinGeckoClient = new CoinGecko();
-
-  const response: ICoinResponse =
-    await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
-      vs_currency: 'eur',
-      // CoinGecko takes parameter UNIX time in s but returns UNIX time in ms
-      from: unixDatesOnRange[0] / 1000,
-      to:
-        moment(unixDatesOnRange[unixDatesOnRange.length - 1])
-          .add(1, 'hours')
-          .valueOf() / 1000
-    });
+  const response: ICoinResponse = await geckocoinResponse(
+    unixDatesOnRange[0],
+    unixDatesOnRange[unixDatesOnRange.length - 1]
+  );
 
   return response.data.prices.map(([time, price]) => ({
     time,
@@ -40,14 +45,7 @@ const getBitcoinVolume = async (
   startDate: string,
   endDate: string
 ): Promise<BitcoinVolume[]> => {
-  const CoinGeckoClient = new CoinGecko();
-
-  const response: ICoinResponse =
-    await CoinGeckoClient.coins.fetchMarketChartRange('bitcoin', {
-      vs_currency: 'eur',
-      from: moment.utc(startDate).unix(),
-      to: moment.utc(endDate).endOf('days').add(1, 'hours').unix()
-    });
+  const response: ICoinResponse = await geckocoinResponse(startDate, endDate);
 
   return response.data.total_volumes.map(([time, volume]) => ({
     time,

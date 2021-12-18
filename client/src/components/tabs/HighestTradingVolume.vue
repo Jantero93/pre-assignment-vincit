@@ -41,7 +41,7 @@ export default defineComponent({
 
       this.$data.printedResult = `Highest trading volume ${
         response.volume
-      } eur on day ${formatDate('YYYY-MM-DD', response.time)}`;
+      } eur on day ${formatDate('YYYY/MM/DD', response.time)}`;
     }
   }
 });

@@ -1,21 +1,27 @@
 <template>
-  <nav class="navbar">
-    <a
-      :class="{ active: selectedTab === 'MainContent' }"
-      @click="$emit('clickedTab', 'MainContent')"
-      >Application</a
-    >
-    <a
-      :class="{ active: selectedTab === 'Description' }"
-      @click="$emit('clickedTab', 'Description')"
-      >Description</a
-    >
-    <a
-      :class="{ active: selectedTab === 'About' }"
-      @click="$emit('clickedTab', 'About')"
-      >About me</a
-    >
-  </nav>
+  <q-header elevated class="bg-orange-10">
+    <q-toolbar>
+      <q-toolbar-title class="nav-bar">Vincit pre-assignment</q-toolbar-title>
+    </q-toolbar>
+
+    <q-tabs v-model="activeTabFromProp" align="center">
+      <q-tab
+        name="MainContent"
+        label="Main Content"
+        @click="$emit('clickedTab', 'MainContent')"
+      />
+      <q-tab
+        name="Description"
+        label="Description"
+        @click="$emit('clickedTab', 'Description')"
+      />
+      <q-tab
+        name="About"
+        label="About"
+        @click="$emit('clickedTab', 'About')"
+      />
+    </q-tabs>
+  </q-header>
 </template>
 
 <script lang="ts">
@@ -29,35 +35,17 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['clickedTab']
+  emits: ['clickedTab'],
+  computed: {
+    activeTabFromProp(): string {
+      return this.$props.selectedTab;
+    }
+  }
 });
 </script>
 
 <style>
-.navbar {
-  background-color: #353535;
-  overflow: hidden;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 56px;
-}
-
-.navbar a {
-  cursor: pointer;
-  color: #14c28e;
-  display: block;
-  float: left;
-  font-size: 18px;
-  padding: 1em 1em;
+.nav-bar {
   text-align: center;
-}
-
-.navbar a:hover {
-  color: white;
-}
-
-.navbar a.active {
-  background-color: #000000;
 }
 </style>

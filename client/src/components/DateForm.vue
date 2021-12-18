@@ -64,7 +64,7 @@ export default defineComponent({
 
 <style scoped>
 .input-form {
-  color: rgb(167, 167, 167);
+  color: rgb(100, 100, 100);
 }
 
 .date-input-row * {
@@ -74,5 +74,9 @@ export default defineComponent({
 .date-input-row {
   display: flex;
   flex-direction: row;
+}
+
+.second-row {
+  margin-top: auto;
 }
 </style>
