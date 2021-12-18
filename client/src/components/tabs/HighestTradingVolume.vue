@@ -1,21 +1,26 @@
 <template>
-    <div>
+  <div>
     <DateForm @dateSubmitted="handleDateSubmit" />
-    <div>{{ printedResult }}</div>
+    <div v-text="printedResult"></div>
   </div>
 </template>
 
 <script lang="ts">
-
-interface State {
-  printedResult: string
-}
-
 import { defineComponent } from 'vue';
 
-import DateForm from '../DateForm.vue'
+/** Components */
+import DateForm from '../DateForm.vue';
 
-import {getHighestTradingVolume} from '../../services/BitcoinService';
+/** Utils */
+import { getHighestTradingVolume } from '../../services/BitcoinService';
+import { formatDate } from '../../utils/date';
+
+/** Types */
+import { BitcoinVolume } from 'common';
+
+interface State {
+  printedResult: string;
+}
 
 export default defineComponent({
   name: 'HighestTradingVolume',
@@ -28,12 +33,15 @@ export default defineComponent({
     } as State;
   },
   methods: {
-    handleDateSubmit(startDate: string, endDate: string) {
-      console.log(`startDate`, startDate)
-      console.log(`endDate`, endDate)
-      console.log('form front')
-      getHighestTradingVolume(startDate, endDate)
-      
+    async handleDateSubmit(startDate: string, endDate: string) {
+      const response = (await getHighestTradingVolume(
+        startDate,
+        endDate
+      )) as BitcoinVolume;
+
+      this.$data.printedResult = `Highest trading volume ${
+        response.volume
+      } eur on day ${formatDate('YYYY-MM-DD', response.time)}`;
     }
   }
 });
