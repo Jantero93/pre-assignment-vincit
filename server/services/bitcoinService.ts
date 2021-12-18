@@ -58,18 +58,27 @@ const longestDownwardTrend = async (
 const highestTradingVolume = async (
   startDate: string,
   endDate: string
-): Promise<void> => {
+): Promise<BitcoinVolume> => {
   const volumeArray: BitcoinVolume[] = await GeckocoinService.getBitcoinVolume(
     startDate,
     endDate
   );
 
-  const totalVolumesEachDay: BitcoinVolume = getTotalVolumeFromDay(
-    volumeArray,
-    startDate
+  /** Get total volume each day */
+  const volumeEachDay: BitcoinVolume[] = convertDateRangeUnixMidnight(
+    startDate,
+    endDate
+  ).map((date: number) => getTotalVolumeFromDay(volumeArray, date));
+
+  /** Get day with highest trading volume */
+  const highestVolumeDay = volumeEachDay.find(
+    (bitcoin: BitcoinVolume) =>
+      bitcoin.volume === Math.max(...volumeEachDay.map((coin) => coin.volume))
   );
-  console.log('placeholder services', totalVolumesEachDay);
+
+  return highestVolumeDay as BitcoinVolume;
 };
+
 const BitcoinService = {
   highestTradingVolume,
   longestDownwardTrend

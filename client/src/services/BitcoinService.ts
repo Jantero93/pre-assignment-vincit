@@ -1,4 +1,4 @@
-import { ApiResponse, BitcoinPrice, get } from 'common';
+import { ApiResponse, BitcoinPrice, BitcoinVolume, get } from 'common';
 
 const BASE_URL = '/api/bitcoin/';
 
@@ -11,8 +11,7 @@ export const getLongestDownward = (
 export const getHighestTradingVolume = (
   startDate: string,
   endDate: string
-  // eslint-disable-next-line
-): Promise<any> =>
+): Promise<ApiResponse<BitcoinVolume>> =>
   get(
     `${BASE_URL}/highesttradingvolume?startDate=${startDate}&endDate=${endDate}`
   );

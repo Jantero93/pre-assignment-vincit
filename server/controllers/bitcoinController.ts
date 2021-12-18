@@ -2,7 +2,7 @@ import BitcoinService from '../services/bitcoinService';
 import logger from '../utils/logger';
 import { Response, Request, Router, NextFunction } from 'express';
 
-import { BitcoinPrice } from 'common';
+import { BitcoinPrice, BitcoinVolume } from 'common';
 
 const API_BITCOIN: string = '/api/bitcoin';
 
@@ -43,10 +43,12 @@ Controller.get(
       return;
     }
 
-    await BitcoinService.highestTradingVolume(
+    const result: BitcoinVolume = await BitcoinService.highestTradingVolume(
       startDate as string,
       endDate as string
     );
+
+    res.status(200).send(result);
   }
 );
 

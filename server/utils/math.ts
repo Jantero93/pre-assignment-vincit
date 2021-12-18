@@ -59,13 +59,13 @@ export const findLongestDecreasingSubArray = (
  */
 export const getTotalVolumeFromDay = (
   volumeArray: BitcoinVolume[],
-  date: string
-): BitcoinVolume => {
-  const daysVolume: BitcoinVolume = volumeArray
+  date: number
+): BitcoinVolume =>
+  volumeArray
     .filter((bitcoin: BitcoinVolume) =>
       moment(bitcoin.time).isSame(date, 'days')
     )
-    .reduce((prev, curr) => ({ ...curr, volume: prev.volume + curr.volume }));
-
-  return daysVolume;
-};
+    .reduce((prev: BitcoinVolume, curr: BitcoinVolume) => ({
+      ...prev,
+      volume: prev.volume + curr.volume
+    }));
