@@ -69,9 +69,12 @@ Controller.get(
       return;
     }
 
-    await BitcoinService.timeMachine(startDate as string, endDate as string);
+    const response: BitcoinPrice[] = await BitcoinService.timeMachine(
+      startDate as string,
+      endDate as string
+    );
 
-    res.status(200).send('working...');
+    res.status(200).send(response);
   }
 );
 

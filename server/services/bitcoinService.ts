@@ -12,7 +12,9 @@ import {
 import {
   closestBitCoinTime,
   getTotalVolumeFromDay,
-  findLongestDecreasingSubArray
+  findLongestDecreasingSubArray,
+  findHighestPrice,
+  findLowestPrice
 } from '../utils/math';
 export interface ICoinResponse {
   success: boolean;
@@ -82,10 +84,26 @@ const highestTradingVolume = async (
 const timeMachine = async (
   startDate: string,
   endDate: string
-): Promise<void> => {
-  console.log('servie time makine');
-  console.log(`startDate`, startDate);
-  console.log(`endDate`, endDate);
+): Promise<BitcoinPrice[]> => {
+  const convertedDateRangeUnix: number[] = convertDateRangeUnixMidnight(
+    startDate,
+    endDate
+  );
+
+  const bitcoinPrices: BitcoinPrice[] =
+    await GeckocoinService.getBitcoinPricesWithinDate(startDate, endDate);
+
+  // Find closest midnight price per day
+  const midnightCoinPrices: BitcoinPrice[] = convertedDateRangeUnix.map(
+    (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
+  );
+
+  const highestPrice: BitcoinPrice = findHighestPrice(midnightCoinPrices);
+  const smallestPrice: BitcoinPrice = findLowestPrice(midnightCoinPrices);
+
+  if (highestPrice.price === smallestPrice.price) return [];
+
+  return [smallestPrice, highestPrice];
 };
 
 const BitcoinService = {

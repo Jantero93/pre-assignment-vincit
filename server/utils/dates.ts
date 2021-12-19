@@ -20,3 +20,17 @@ export const convertDateRangeUnixMidnight = (
 
 export const roundToClosestDayUnix = (unixTime: number): number =>
   moment.utc(unixTime).add(12, 'hours').startOf('day').valueOf();
+
+export const calcBusinessDays = (
+  startDate: string | number,
+  endDate: string | number
+): number => {
+  const day = moment(startDate);
+  let businessDays = 0;
+
+  while (day.isSameOrBefore(endDate, 'day')) {
+    day.day() != 0 && day.day() != 6 && businessDays++;
+    day.add(1, 'days');
+  }
+  return businessDays;
+};

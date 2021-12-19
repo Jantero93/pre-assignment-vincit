@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-center">
-    <q-card bordered class="card-container">
+    <q-card bordered class="card-container" flat>
       <q-tabs v-model="activetab" class="bg-grey-4" align="justify">
         <q-tab
           name="LongestDownward"
