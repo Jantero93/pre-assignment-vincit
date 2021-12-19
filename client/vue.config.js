@@ -1,9 +1,9 @@
 module.exports = {
   devServer: {
     proxy: {
-      '^/': {
+      '/api/*': {
         target: 'http://localhost:8000',
-        changeOrigin: true
+        secure: false
       }
     }
   },
@@ -15,7 +15,5 @@ module.exports = {
     }
   },
 
-  transpileDependencies: [
-    'quasar'
-  ]
+  transpileDependencies: ['quasar']
 };

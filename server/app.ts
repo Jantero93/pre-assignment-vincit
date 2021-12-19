@@ -5,11 +5,12 @@ import cors from 'cors';
 import { errorHandler, requestLogger } from './utils/middleware';
 
 import bitcoinController from './controllers/bitcoinController';
-import defaultController from './controllers/defaultController';
 
 import { unknownEndpoint } from './utils/unknownEndpoint';
 
 const app: Application = express();
+
+app.use(express.static('../client/dist'));
 
 app.use(cors());
 app.use(express.json());
@@ -21,7 +22,6 @@ app.use(
 
 app.use(requestLogger);
 
-app.use(defaultController);
 app.use(bitcoinController);
 
 app.use(unknownEndpoint);

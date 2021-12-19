@@ -1,0 +1,27 @@
+{
+  "name": "pre-assignment-vincit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/dist/index.js",
+  "scripts": {
+    "preinstall": "npm run build:client",
+    "postinstall": "npm run install:server",
+    "start": "cd server/ && npm start",
+    "dev": "concurrently --kill-others -c cyan,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
+    "build:client": "npm --prefix client/ run build",
+    "install:server": "cd server/ && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jantero93/pre-assignment-vincit.git"
+  },
+  "author": "Jani Sillanpaa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jantero93/pre-assignment-vincit/issues"
+  },
+  "homepage": "https://github.com/Jantero93/pre-assignment-vincit#readme",
+  "devDependencies": {
+    "concurrently": "^6.5.1"
+  }
+}
