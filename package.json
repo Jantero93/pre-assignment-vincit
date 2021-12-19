@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/dist/index.js",
+  "engines": {
+    "node": "v12.19.0"
+  },
   "scripts": {
-    "preinstall": "npm run build:client",
-    "postinstall": "npm run install:server",
     "start": "cd server/ && npm start",
     "dev": "concurrently --kill-others -c cyan,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
-    "build:client": "npm --prefix client/ run build",
-    "install:server": "cd server/ && npm install"
+    "postinstall": "npm run install:server",
+    "install:server": "cd server && npm i && npm run compile"
   },
   "repository": {
     "type": "git",
