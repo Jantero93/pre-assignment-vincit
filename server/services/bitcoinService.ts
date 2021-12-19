@@ -13,8 +13,7 @@ import {
   closestBitCoinTime,
   getTotalVolumeFromDay,
   findLongestDecreasingSubArray,
-  findHighestPrice,
-  findLowestPrice
+  timeMachineMath
 } from '../utils/math';
 export interface ICoinResponse {
   success: boolean;
@@ -98,12 +97,7 @@ const timeMachine = async (
     (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
   );
 
-  const highestPrice: BitcoinPrice = findHighestPrice(midnightCoinPrices);
-  const smallestPrice: BitcoinPrice = findLowestPrice(midnightCoinPrices);
-
-  if (highestPrice.price === smallestPrice.price) return [];
-
-  return [smallestPrice, highestPrice];
+  return timeMachineMath(midnightCoinPrices);
 };
 
 const BitcoinService = {

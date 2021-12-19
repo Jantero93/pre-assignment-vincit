@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "cd server/ && npm start",
-    "dev": "concurrently --kill-others -c cyan,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
+    "dev": "concurrently --kill-others -c yellow,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
     "postinstall": "npm run install:server",
     "install:server": "cd server && npm i && npm run compile"
   },

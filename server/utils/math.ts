@@ -70,24 +70,21 @@ export const getTotalVolumeFromDay = (
       volume: prev.volume + curr.volume
     }));
 
-export const findHighestPrice = (priceArray: BitcoinPrice[]): BitcoinPrice => {
-  const highestPrice: number = Math.max.apply(
-    Math,
-    priceArray.map((bitcoin: BitcoinPrice) => bitcoin.price)
-  );
+export const timeMachineMath = (priceArray: BitcoinPrice[]): BitcoinPrice[] => {
+  let maxDiff = -1;
 
-  return priceArray.find(
-    (bitcoin: BitcoinPrice) => bitcoin.price === highestPrice
-  ) as BitcoinPrice;
-};
+  let lowestCoin: BitcoinPrice = priceArray[0];
+  let highestCoin: BitcoinPrice = priceArray[1];
 
-export const findLowestPrice = (priceArray: BitcoinPrice[]): BitcoinPrice => {
-  const smallestPrice: number = Math.min.apply(
-    Math,
-    priceArray.map((bitcoin: BitcoinPrice) => bitcoin.price)
-  );
+  for (let i = 0; i < priceArray.length; i++) {
+    for (let j = i + 1; j < priceArray.length; j++) {
+      if (priceArray[j].price - priceArray[i].price > maxDiff) {
+        maxDiff = priceArray[j].price - priceArray[i].price;
+        lowestCoin = priceArray[i];
+        highestCoin = priceArray[j];
+      }
+    }
+  }
 
-  return priceArray.find(
-    (bitcoin: BitcoinPrice) => bitcoin.price === smallestPrice
-  ) as BitcoinPrice;
+  return maxDiff <= 0 ? [] : [lowestCoin, highestCoin];
 };

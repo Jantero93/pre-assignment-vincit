@@ -8,10 +8,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+/** Components */
 import DateForm from '../DateForm.vue';
 
+/** Services */
 import { getTimeMachine } from '../../services/BitcoinService';
+
+/** Utils */
 import { formatDate } from '../../utils/date';
+
+/** Types */
 import { BitcoinPrice } from 'common';
 
 interface State {
@@ -35,14 +41,17 @@ export default defineComponent({
         endDate
       )) as BitcoinPrice[];
 
-      this.printedResult = !response.length
-        ? 'Price only decreases on selected date range'
-        : `Best day to buy is ${formatDate(
-            'YYYY/MM/DD',
+      this.printedResult = response.length
+        ? `Best day to buy is ${formatDate(
+            'YYYY/DD/MM',
             response[0].time
           )} when price is ${
             response[0].price
-          } eur\nBest day to sell is ${formatDate('YYYY/MM/DD', response[1].time)} when price is ${response[1].price} eur`;
+          } eur. Best day to sell is ${formatDate(
+            'YYYY/DD/MM',
+            response[1].time
+          )} when price is ${response[1].price} eur`
+        : 'Price on decreased only on date range or only one day picked';
     }
   }
 });
