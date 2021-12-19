@@ -79,9 +79,19 @@ const highestTradingVolume = async (
   return highestVolumeDay as BitcoinVolume;
 };
 
+const timeMachine = async (
+  startDate: string,
+  endDate: string
+): Promise<void> => {
+  console.log('servie time makine');
+  console.log(`startDate`, startDate);
+  console.log(`endDate`, endDate);
+};
+
 const BitcoinService = {
   highestTradingVolume,
-  longestDownwardTrend
+  longestDownwardTrend,
+  timeMachine
 };
 
 export default BitcoinService;

@@ -1,7 +1,13 @@
+/** Services */
 import BitcoinService from '../services/bitcoinService';
-import logger from '../utils/logger';
+
+/** Express */
 import { Response, Request, Router, NextFunction } from 'express';
 
+/** Utils */
+import logger from '../utils/logger';
+
+/** Types */
 import { BitcoinPrice, BitcoinVolume } from 'common';
 
 const API_BITCOIN: string = '/api/bitcoin';
@@ -13,7 +19,7 @@ Controller.get(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { startDate, endDate } = req.query;
 
-    if (!startDate || !endDate) {
+    if (isDatesValid(startDate as string, endDate as string)) {
       res.status(422).send({ error: 'Invalid query' });
       logger.error('Invalid query at /bitcoin/downwardtrend', req.query);
       return;
@@ -37,7 +43,7 @@ Controller.get(
   async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
     const { startDate, endDate } = req.query;
 
-    if (!startDate || !endDate) {
+    if (isDatesValid(startDate as string, endDate as string)) {
       res.status(422).send({ error: 'Invalid query' });
       logger.error('Invalid query at /bitcoin/highesttradinvolume', req.query);
       return;
@@ -51,5 +57,25 @@ Controller.get(
     res.status(200).send(result);
   }
 );
+
+Controller.get(
+  `${API_BITCOIN}/timemachine`,
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+    const { startDate, endDate } = req.query;
+
+    if (isDatesValid(startDate as string, startDate as string)) {
+      res.status(422).send({ error: 'Invalid query' });
+      logger.error('Invalid query at /bitcoin/highesttradinvolume', req.query);
+      return;
+    }
+
+    await BitcoinService.timeMachine(startDate as string, endDate as string);
+
+    res.status(200).send('working...');
+  }
+);
+
+const isDatesValid = (startDate: string, endDate: string): boolean =>
+  !startDate || !endDate;
 
 export default Controller;
