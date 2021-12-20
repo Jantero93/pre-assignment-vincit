@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="longest-downward">
     <DateForm @dateSubmitted="handleDateSubmit" />
     <div class="result-text" v-text="printedResult"></div>
   </div>
@@ -52,8 +52,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .result-text {
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 </style>

@@ -56,7 +56,7 @@
               <li>Health and care related jobs until 2020 autumn</li>
               <li>
                 2020 autumn - 2021 spring part of Tampere's health care system
-                integration. Mostly excel related jobs
+                integration. Mostly Excel related jobs
               </li>
               <li>
                 Summer 2021 Combitech, TypeScript + Spring. A lot with
