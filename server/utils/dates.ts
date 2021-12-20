@@ -1,5 +1,12 @@
 import moment from 'moment';
 
+/**
+ * Generates UNIX dates @ 00:00 AM from given date range
+ * Function includes end dates "next midnight also" e.g end date 25 december will include december 26 00:00 AM
+ * @param startDate
+ * @param endDate
+ * @returns array of UNIX times @ 00:00 AM
+ */
 export const convertDateRangeUnixMidnight = (
   startDate: string,
   endDate: string
@@ -18,19 +25,9 @@ export const convertDateRangeUnixMidnight = (
   return unixDatesOnRange;
 };
 
+/**
+ * @param unixTime Time to round in UNIX
+ * @returns rounded to closest day in UNIX
+ */
 export const roundToClosestDayUnix = (unixTime: number): number =>
   moment.utc(unixTime).add(12, 'hours').startOf('day').valueOf();
-
-export const calcBusinessDays = (
-  startDate: string | number,
-  endDate: string | number
-): number => {
-  const day = moment(startDate);
-  let businessDays = 0;
-
-  while (day.isSameOrBefore(endDate, 'day')) {
-    day.day() != 0 && day.day() != 6 && businessDays++;
-    day.add(1, 'days');
-  }
-  return businessDays;
-};

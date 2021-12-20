@@ -43,14 +43,14 @@ export default defineComponent({
 
       this.printedResult = response.length
         ? `Best day to buy is ${formatDate(
-            'YYYY/DD/MM',
+            'LL',
             response[0].time
-          )} when price is ${
-            response[0].price
-          } eur. Best day to sell is ${formatDate(
-            'YYYY/DD/MM',
+          )} when price is ${response[0].price.toFixed(
+            2
+          )} eur. Best day to sell is ${formatDate(
+            'LL',
             response[1].time
-          )} when price is ${response[1].price} eur`
+          )} when price is ${response[1].price.toFixed(2)} eur`
         : 'Price on decreased only on date range or only one day picked';
     }
   }

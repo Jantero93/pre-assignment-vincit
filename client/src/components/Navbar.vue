@@ -4,7 +4,7 @@
       <q-toolbar-title class="nav-bar">Vincit pre-assignment</q-toolbar-title>
     </q-toolbar>
 
-    <q-tabs v-model="activeTabFromProp" align="center">
+    <q-tabs v-model="$data.activeTab" align="center">
       <q-tab
         name="MainContent"
         label="Main Content"
@@ -15,17 +15,17 @@
         label="Description"
         @click="$emit('clickedTab', 'Description')"
       />
-      <q-tab
-        name="About"
-        label="About"
-        @click="$emit('clickedTab', 'About')"
-      />
+      <q-tab name="About" label="About" @click="$emit('clickedTab', 'About')" />
     </q-tabs>
   </q-header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+interface State {
+  activeTab: string;
+}
 
 export default defineComponent({
   name: 'Navbar',
@@ -36,10 +36,10 @@ export default defineComponent({
     }
   },
   emits: ['clickedTab'],
-  computed: {
-    activeTabFromProp(): string {
-      return this.$props.selectedTab;
-    }
+  data() {
+    return {
+      activeTab: this.$props.selectedTab
+    } as State;
   }
 });
 </script>

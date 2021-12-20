@@ -39,9 +39,9 @@ export default defineComponent({
         endDate
       )) as BitcoinVolume;
 
-      this.$data.printedResult = `Highest trading volume ${
-        response.volume
-      } eur on day ${formatDate('YYYY/MM/DD', response.time)}`;
+      this.$data.printedResult = `Highest trading volume ${response.volume.toFixed(
+        2
+      )} eur on day ${formatDate('LL', response.time)}`;
     }
   }
 });

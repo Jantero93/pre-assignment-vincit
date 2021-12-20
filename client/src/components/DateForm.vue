@@ -20,7 +20,7 @@
           @change="dateChanged"
         />
       </p>
-      <p class="second-row">
+      <p class="submit-btn">
         <input type="submit" value="Submit" />
       </p>
     </div>
@@ -76,7 +76,7 @@ export default defineComponent({
   flex-direction: row;
 }
 
-.second-row {
+.submit-btn {
   margin-top: auto;
 }
 </style>

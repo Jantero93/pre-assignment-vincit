@@ -3,9 +3,9 @@
     <Navbar :selected-tab="$data.selectedTab" @clickedTab="handleClickedTab" />
 
     <q-page-container>
-       <q-page >
-      <Component :is="selectedTab" />
-       </q-page>
+      <q-page>
+        <Component :is="selectedTab" />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -48,5 +48,5 @@ body {
   padding-top: 3em;
   margin: 0;
   overflow: hidden;
-  }
+}
 </style>

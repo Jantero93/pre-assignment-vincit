@@ -13,6 +13,7 @@ import DateForm from '../DateForm.vue';
 
 /** Utilities */
 import { getLongestDownward } from './../../services/BitcoinService';
+import { formatDate } from './../../utils/date';
 
 /** Types */
 import { BitcoinPrice } from 'common';
@@ -33,14 +34,19 @@ export default defineComponent({
   },
   methods: {
     async handleDateSubmit(startingDate: string, endingDate: string) {
-      const result: BitcoinPrice[] = (await getLongestDownward(
+      const result: BitcoinPrice[] = await getLongestDownward(
         startingDate,
         endingDate
-      )) as BitcoinPrice[];
+      );
 
       this.printedResult = !result.length
         ? `No downward trend for inputs from ${startingDate} and to ${endingDate}`
-        : `In bitcoin's historical data from CoinGecko, the price decreased ${result.length} days in a row for the inputs from ${startingDate} and to ${endingDate}`;
+        : `In bitcoin's historical data from CoinGecko, the price decreased ${
+            result.length
+          } days in a row for the inputs from ${startingDate} and to ${endingDate}. Trend was from ${formatDate(
+            'MMMM DD',
+            result[0].time
+          )} to ${formatDate('MMMM DD', result[result.length - 1].time)}`;
     }
   }
 });
