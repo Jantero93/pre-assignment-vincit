@@ -29,6 +29,6 @@ describe('Basic functionality', () => {
     cy.contains('Submit');
 
     cy.contains('Time Machine').click();
-    cy.contains('placeholder');
+    cy.contains('Submit');
   });
 });

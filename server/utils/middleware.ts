@@ -13,14 +13,3 @@ export const requestLogger = (
   logger.info('---');
   next();
 };
-
-export const errorHandler = (
-  error: Error,
-  _request: Request,
-  response: Response,
-  _next: NextFunction
-): void => {
-  logger.info('errorHandler');
-  logger.error(error.message);
-  response.status(400).send(error.message);
-};

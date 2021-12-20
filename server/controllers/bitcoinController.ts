@@ -2,7 +2,7 @@
 import BitcoinService from '../services/bitcoinService';
 
 /** Express */
-import { Response, Request, Router, NextFunction } from 'express';
+import { Response, Request, Router } from 'express';
 
 /** Utils */
 import logger from '../utils/logger';
@@ -16,7 +16,7 @@ const Controller: Router = Router();
 
 Controller.get(
   `${API_BITCOIN}/downwardtrend`,
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  async (req: Request, res: Response): Promise<void> => {
     const { startDate, endDate } = req.query;
 
     if (isDatesValid(startDate as string, endDate as string)) {
@@ -33,14 +33,14 @@ Controller.get(
         );
       res.status(200).send(response);
     } catch (error) {
-      next(error);
+      res.status(400).send({ error: 'Geckocoin query failed' });
     }
   }
 );
 
 Controller.get(
   `${API_BITCOIN}/highesttradingvolume`,
-  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+  async (req: Request, res: Response): Promise<void> => {
     const { startDate, endDate } = req.query;
 
     if (isDatesValid(startDate as string, endDate as string)) {
@@ -60,7 +60,7 @@ Controller.get(
 
 Controller.get(
   `${API_BITCOIN}/timemachine`,
-  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+  async (req: Request, res: Response): Promise<void> => {
     const { startDate, endDate } = req.query;
 
     if (isDatesValid(startDate as string, startDate as string)) {

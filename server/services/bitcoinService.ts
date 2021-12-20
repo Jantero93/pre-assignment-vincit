@@ -11,9 +11,9 @@ import {
 } from '../utils/dates';
 import {
   closestBitCoinTime,
-  getTotalVolumeFromDay,
+  mostProfitSellAndBuyDates,
   findLongestDecreasingSubArray,
-  timeMachineMath
+  getTotalVolumeFromDay
 } from '../utils/math';
 export interface ICoinResponse {
   success: boolean;
@@ -97,7 +97,7 @@ const timeMachine = async (
     (unixDate: number) => closestBitCoinTime(bitcoinPrices, unixDate)
   );
 
-  return timeMachineMath(midnightCoinPrices);
+  return mostProfitSellAndBuyDates(midnightCoinPrices);
 };
 
 const BitcoinService = {

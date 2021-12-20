@@ -75,7 +75,9 @@ export const getTotalVolumeFromDay = (
  * @param priceArray Array which is searched
  * @returns If no good buying/selling found --> empty array. Otherwise [smallestPrice, highestPrice]
  */
-export const timeMachineMath = (priceArray: BitcoinPrice[]): BitcoinPrice[] => {
+export const mostProfitSellAndBuyDates = (
+  priceArray: BitcoinPrice[]
+): BitcoinPrice[] => {
   let maxDiff = -1;
 
   let lowestCoin: BitcoinPrice = priceArray[0];
@@ -84,7 +86,7 @@ export const timeMachineMath = (priceArray: BitcoinPrice[]): BitcoinPrice[] => {
   /**
    * First loop will traverse all prices on priceArray
    * Second loop will check all diffs on elements on greater indexes
-   * If diff is greater, will new diff and prices be stored
+   * If diff is greater, will new diff and prices be stored variables
    * If there is absolutely no greater prices, will initialized maxDiff = -1 go through
    * and empty array is returned
    */

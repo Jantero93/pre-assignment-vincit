@@ -2,12 +2,28 @@ import CoinGecko from 'coingecko-api';
 
 /** Types */
 import { BitcoinPrice, BitcoinVolume } from 'common';
-import { ICoinResponse } from './bitcoinService';
 
 /** Utils */
 import { convertDateRangeUnixMidnight } from '../utils/dates';
 import moment from 'moment';
 
+export interface ICoinResponse {
+  success: boolean;
+  message: string;
+  code: number;
+  data: {
+    prices: number[][];
+    market_caps: number[][];
+    total_volumes: number[][];
+  };
+}
+
+/**
+ * Fetch geckocoin data. Currency: Euro, Coin: Bitcoin
+ * @param start starting date -> moment(start)
+ * @param end ending date -> moment(end)
+ * @returns general api response from geckocoin
+ */
 const geckocoinResponse = async (
   start: string | number,
   end: string | number
@@ -21,6 +37,12 @@ const geckocoinResponse = async (
   });
 };
 
+/**
+ * Get bitcoin prices from general api response
+ * @param startDate -> moment(startDate)
+ * @param endDate -> moment(endDate)
+ * @returns Array of BitcoinPrice objects
+ */
 const getBitcoinPricesWithinDate = async (
   startDate: string,
   endDate: string
@@ -41,6 +63,12 @@ const getBitcoinPricesWithinDate = async (
   })) as BitcoinPrice[];
 };
 
+/**
+ * Get bitcoin volumes from general api response
+ * @param startDate -> moment(startDate)
+ * @param endDate -> moment(endDate)
+ * @returns Array of BitcoinVolume objects
+ */
 const getBitcoinVolume = async (
   startDate: string,
   endDate: string
