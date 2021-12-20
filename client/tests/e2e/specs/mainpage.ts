@@ -3,11 +3,10 @@ describe('Basic functionality', () => {
     cy.visit('/');
     cy.contains('Submit');
 
-    cy.contains('Description').click();
-    cy.contains('description').click();
-
     cy.contains('About').click();
-    cy.contains('about');
+    cy.contains('misc').click();
+
+    cy.contains('Tampere University of Applied Sciences');
   });
 
   it('Show alert if end date is before start date', () => {

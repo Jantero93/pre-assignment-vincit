@@ -10,24 +10,25 @@
       height="100%"
     >
       <q-carousel-slide name="client" class="column no-wrap flex-center">
-       <CarouselClient />
+        <CarouselClient />
       </q-carousel-slide>
       <q-carousel-slide name="server" class="column no-wrap flex-center">
-       <CarouselServer />
+        <CarouselServer />
       </q-carousel-slide>
       <q-carousel-slide name="other" class="column no-wrap flex-center">
         <CarouselMisc />
       </q-carousel-slide>
-
     </q-carousel>
 
     <div class="row justify-center" style="padding-top: 3em">
-      <q-btn-toggle v-model="slide" 
+      <q-btn-toggle
+        v-model="slide"
         glossy
+        spread
         :options="[
           { label: 'client', value: 'client' },
           { label: 'server', value: 'server' },
-          { label: 'misc', value: 'other' },
+          { label: 'misc', value: 'other' }
         ]"
       />
     </div>
@@ -38,9 +39,9 @@
 import { defineComponent, ref } from 'vue';
 
 /** Components */
-import CarouselClient from './aboutCarouselItems/CarouselClient.vue'
-import CarouselMisc from './aboutCarouselItems/CarouselMisc.vue'
-import CarouselServer from './aboutCarouselItems/CarouselServer.vue'
+import CarouselClient from './aboutCarouselItems/CarouselClient.vue';
+import CarouselMisc from './aboutCarouselItems/CarouselMisc.vue';
+import CarouselServer from './aboutCarouselItems/CarouselServer.vue';
 
 export default defineComponent({
   name: 'About',
@@ -49,13 +50,12 @@ export default defineComponent({
     CarouselMisc,
     CarouselServer
   },
-   setup () {
+  setup() {
     return {
-      slide: ref('client'),
-    }
+      slide: ref('client')
+    };
   }
 });
 </script>
 
-<style >
-</style>
+<style></style>

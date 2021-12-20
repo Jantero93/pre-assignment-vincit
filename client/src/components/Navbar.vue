@@ -10,11 +10,6 @@
         label="Main Content"
         @click="$emit('clickedTab', 'MainContent')"
       />
-      <q-tab
-        name="Description"
-        label="Description"
-        @click="$emit('clickedTab', 'Description')"
-      />
       <q-tab name="About" label="About" @click="$emit('clickedTab', 'About')" />
     </q-tabs>
   </q-header>
