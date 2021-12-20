@@ -45,8 +45,7 @@ export default defineComponent({
 
 <style>
 body {
-  padding-top: 3em;
-  margin: 0;
   overflow: hidden;
+  padding-top: 3em;
 }
 </style>

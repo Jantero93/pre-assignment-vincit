@@ -1,8 +1,60 @@
 <template>
-   <q-icon name="devices" color="black" size="80px" />
-        <div class="q-mt-md text-center">
-          {{ 'client!' }}
-        </div>
+  <div class="q-pa-md" style="max-width: 550px">
+    <q-list>
+      <q-item>
+        <q-item-section>
+          <q-item-label>Client</q-item-label>
+          <q-item-label caption lines="2">Vue 3 + TypeScript</q-item-label>
+          <q-item-label caption lines="2"
+            >I have used this combination at work last summer and I wanted once
+            a while to code with this than React.</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+
+      <q-separator spaced inset />
+
+      <q-item>
+        <q-item-section>
+          <q-item-label>UI</q-item-label>
+          <q-item-label caption
+            ><a href="https://quasar.dev/">Quasar Framework</a> <br />Totally
+            new framework for me, I had to learn it for this very project.
+            Usually I use e.g Bootstrap but there is no support for Vue 3
+            yet.</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+
+      <q-separator spaced inset />
+
+      <q-item>
+        <q-item-section>
+          <q-item-label>Architecture</q-item-label>
+          <q-item-label caption
+            >Nothing super fancy; utilities, services in separated folders.
+            Grouped similar UI components in individual folders</q-item-label
+          >
+        </q-item-section>
+      </q-item>
+
+      <q-separator spaced inset />
+
+      <q-item>
+        <q-item-section>
+          <q-item-label>Misc, trying new stuff</q-item-label>
+          <q-item-label caption
+            >There is some things I have wanted to try out. Client and server
+            have some tests, these tests are not very well done or follow good
+            practices. I also did generic api call function with fetch and
+            wrapped it in local npm-package. Normally I would use probably
+            Axios.</q-item-label
+          >
+        </q-item-section>
+        <q-separator spaced inset />
+      </q-item>
+    </q-list>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,6 +65,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -7,6 +7,7 @@
       animated
       control-color="primary"
       class="rounded-borders"
+      height="100%"
     >
       <q-carousel-slide name="client" class="column no-wrap flex-center">
        <CarouselClient />
@@ -20,14 +21,13 @@
 
     </q-carousel>
 
-    <div class="row justify-center">
-      <q-btn-toggle
-        v-model="slide"
+    <div class="row justify-center" style="padding-top: 3em">
+      <q-btn-toggle v-model="slide" 
         glossy
         :options="[
-          { label: 1, value: 'client' },
-          { label: 2, value: 'server' },
-          { label: 3, value: 'other' },
+          { label: 'client', value: 'client' },
+          { label: 'server', value: 'server' },
+          { label: 'misc', value: 'other' },
         ]"
       />
     </div>
@@ -37,6 +37,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
+/** Components */
 import CarouselClient from './aboutCarouselItems/CarouselClient.vue'
 import CarouselMisc from './aboutCarouselItems/CarouselMisc.vue'
 import CarouselServer from './aboutCarouselItems/CarouselServer.vue'
@@ -51,15 +52,10 @@ export default defineComponent({
    setup () {
     return {
       slide: ref('client'),
-      lorem: 'kaka, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo provident incidunt ducimus iusto perferendis porro earum. Totam, numquam?'
     }
   }
 });
 </script>
 
-<style scoped>
-.content {
-  margin: 3em auto;
-  width: 100%;
-}
+<style >
 </style>
