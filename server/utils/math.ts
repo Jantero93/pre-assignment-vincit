@@ -11,7 +11,7 @@ export const closestBitCoinTime = (
   bitcoinPrices: BitcoinPrice[],
   timeToMatch: number
 ): BitcoinPrice =>
-  bitcoinPrices.reduce((prev, curr) =>
+  bitcoinPrices.reduce((prev: BitcoinPrice, curr: BitcoinPrice) =>
     Math.abs(curr.time - timeToMatch) < Math.abs(prev.time - timeToMatch)
       ? curr
       : prev

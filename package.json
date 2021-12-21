@@ -10,9 +10,11 @@
     "start": "cd server/ && npm start",
     "dev": "concurrently --kill-others -c yellow,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
     "postinstall": "npm run install:server",
+    "preinstall": "npm run install:common",
     "install:build:all": "npm install && npm run install:build:client",
     "install:build:client": "cd client/ && npm install && npm run build",
-    "install:server": "cd server && npm i && npm run compile"
+    "install:server": "cd server && npm i && npm run compile",
+    "install:common": "cd common/ && npm install && npm run compile"
   },
   "repository": {
     "type": "git",
