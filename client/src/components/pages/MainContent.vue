@@ -28,7 +28,6 @@
           stretch
           flat
           :label="formattedActiveTab"
-
         >
           <q-list>
             <q-item clickable @click="activeTab = 'LongestDownward'">

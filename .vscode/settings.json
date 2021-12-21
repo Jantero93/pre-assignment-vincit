@@ -15,5 +15,5 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["Geckocoin"]
+  "cSpell.words": ["Geckocoin", "Kanban"]
 }

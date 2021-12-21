@@ -1,7 +1,7 @@
 <template>
   <div>
     <DateForm @dateSubmitted="handleDateSubmit" />
-    <div v-text="printedResult" />
+    <div class="result-text" v-text="printedResult" />
   </div>
 </template>
 
@@ -60,5 +60,10 @@ export default defineComponent({
 <style scoped>
 .content {
   color: white;
+}
+
+.result-text {
+  padding-top: 1em;
+  overflow-wrap: break-word;
 }
 </style>

@@ -1,15 +1,18 @@
 <template>
-<div id="q-app">
-  <q-layout view="hHh lpR fFf" style="min-height: inherit">
-    <Navbar :selected-tab="$data.selectedTab" @clickedTab="handleClickedTab" />
+  <div id="q-app">
+    <q-layout view="hHh lpR fFf" style="min-height: inherit">
+      <Navbar
+        :selected-tab="$data.selectedTab"
+        @clickedTab="handleClickedTab"
+      />
 
-    <q-page-container>
-      <q-page style="min-height: inherit">
-        <Component :is="selectedTab" />
-      </q-page>
-    </q-page-container>
-  </q-layout>
-</div>
+      <q-page-container>
+        <q-page style="min-height: inherit">
+          <Component :is="selectedTab" />
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>
 
 <script lang="ts">

@@ -54,6 +54,7 @@ export default defineComponent({
 
 <style>
 .result-text {
+  padding-top: 1em;
   overflow-wrap: break-word;
 }
 </style>

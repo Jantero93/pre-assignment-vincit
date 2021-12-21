@@ -4,18 +4,16 @@
       <q-item>
         <q-item-section>
           <q-item-label>Server</q-item-label>
-          <q-item-label caption lines="2"
-            >Node + Express + TypeScript</q-item-label
-          >
-          <q-item-label caption lines="2"
+          <q-item-label caption>Node + Express + TypeScript</q-item-label>
+          <q-item-label caption
             >This is my the most used stack in backend. To be honest it's not my
             favorite one and I have been practicing some with Spring and I'm
             very interested about C# .NET
           </q-item-label>
           <q-item-label style="padding-top: 1em">Why this stack</q-item-label>
-          <q-item-label caption lines="2"
+          <q-item-label caption
             >Reason is chose this stack was that, I knew quite wll how to deploy
-            it to Heroku. Otherwise I would have chosen Spring JPA Hibernate ORM
+            it to Heroku. Otherwise I would have chosen Spring
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -57,5 +55,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -4,10 +4,11 @@
       <q-item>
         <q-item-section>
           <q-item-label>Client</q-item-label>
-          <q-item-label caption lines="2">Vue 3 + TypeScript</q-item-label>
-          <q-item-label caption lines="2"
-            >I have used this combination at work last summer and I wanted once
-            a while to code with this than React.</q-item-label
+          <q-item-label caption>Vue 3 + TypeScript</q-item-label>
+          <q-item-label caption
+            >Usually my 'go to' is React + TS. I have had used Vue 2 + TS on
+            work last summer and I wanted to practice it some
+            more.</q-item-label
           >
         </q-item-section>
       </q-item>
@@ -32,7 +33,7 @@
         <q-item-section>
           <q-item-label>Architecture</q-item-label>
           <q-item-label caption
-            >Nothing super fancy; utilities, services in separated folders.
+            >Nothing super fancy; utilities, services are separated folders.
             Grouped similar UI components in individual folders</q-item-label
           >
         </q-item-section>

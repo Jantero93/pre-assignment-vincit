@@ -10,9 +10,9 @@
     "start": "cd server/ && npm start",
     "dev": "concurrently --kill-others -c yellow,magenta -n CLIENT,SERVER \"npm --prefix client/ run dev\" \"npm --prefix server/ run dev\"",
     "postinstall": "npm run install:server",
-    "install:server": "cd server && npm i && npm run compile",
+    "install:build:all": "npm install && npm run install:build:client",
     "install:build:client": "cd client/ && npm install && npm run build",
-    "fulldeploy:heroku": "npm install && npm run install:build:client && git add . && git commit -m \" deploy to heroku \" &&  git push heroku master"
+    "install:server": "cd server && npm i && npm run compile"
   },
   "repository": {
     "type": "git",

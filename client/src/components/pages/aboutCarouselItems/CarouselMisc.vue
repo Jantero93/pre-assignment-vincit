@@ -4,13 +4,14 @@
       <q-item>
         <q-item-section>
           <q-item-label>Me</q-item-label>
-          <q-item-label caption lines="2">Jani Sillanpää</q-item-label>
-          <q-item-label caption lines="2"
-            >Fourth year student at Tampere University of Applied
-            Sciences</q-item-label
-          >
-          <q-item-label caption lines="2"
-            ><a href="https://github.com/jantero93">My GitHub</a></q-item-label
+          <q-item-label caption>
+            <ul>
+              <li>Jani Sillanpää</li>
+              <li>
+                Fourth year student at Tampere University of Applied Sciences
+              </li>
+              <li><a href="https://github.com/jantero93">My GitHub</a></li>
+            </ul></q-item-label
           >
         </q-item-section>
       </q-item>
@@ -59,10 +60,11 @@
                 integration. Mostly Excel related jobs
               </li>
               <li>
-                Summer 2021 Combitech, TypeScript + Spring. A lot with
+                Summer 2021 Combitech, Vue 2 + TypeScript + Spring. A lot with
                 <a href="https://openlayers.org/">OpenLayers</a> and
                 <a href="https://visjs.org/">VisJs Timeline</a>
               </li>
+              <li>Confluence, Jira(Kanban), Bitbucket, Git flow.</li>
             </ul></q-item-label
           >
         </q-item-section>

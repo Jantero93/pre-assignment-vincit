@@ -1,7 +1,7 @@
 <template>
   <form class="input-form" @submit.prevent="handleSubmit">
-    <div class="date-input-row">
-      <p>
+    <div class="row justify-start">
+      <div class="column" style="margin-right: 1em">
         <label for="start-date">Starting date</label>
         <input
           id="start-date"
@@ -9,9 +9,9 @@
           type="date"
           @change="dateChanged"
         />
-      </p>
+      </div>
 
-      <p>
+      <div class="column" style="margin-right: 1em">
         <label for="end-date">Ending date</label>
         <input
           id="end-date"
@@ -19,10 +19,12 @@
           type="date"
           @change="dateChanged"
         />
-      </p>
-      <p class="submit-btn">
-        <input type="submit" value="Submit" />
-      </p>
+      </div>
+      <div class="button-wrapper">
+        <button type="submit" value="Submit" class="submit-button">
+          Submit
+        </button>
+      </div>
     </div>
   </form>
 </template>
@@ -65,18 +67,16 @@ export default defineComponent({
 <style scoped>
 .input-form {
   color: rgb(100, 100, 100);
-}
-
-.date-input-row * {
-  padding-right: 1em;
-}
-
-.date-input-row {
+  align-items: center;
   display: flex;
-  flex-direction: row;
 }
 
-.submit-btn {
-  margin-top: auto;
+.submit-button {
+  margin-top: 1em;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: flex-end;
 }
 </style>
