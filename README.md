@@ -45,12 +45,22 @@ For running the server, navigate to the server folder and ```npm run dev``` will
 
 At root (main package.json) ```npm start```. Be sure you have compiled all files and generated client build.
 Express will serve static content (client) on root path. With default configure: http://localhost:8000
+
 - - -
+
+## Architecture
+
+[![vincitarkki.jpg](https://i.postimg.cc/cLwf0PH3/vincitarkki.jpg)](https://postimg.cc/5X9Xm789)
+
+- - -
+
 ## Troubleshooting
 
 > All folders will not install when execute ```npm run install:build:all```
 
 Run to server and common separately ```npm install && npm run compile``` for client execute ```npm install && npm run build```
+
+
 
 > Proxy error: Could not proxy request api/bitcoin...
 
