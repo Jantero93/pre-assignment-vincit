@@ -14,7 +14,7 @@ Scrooge McDuck desperately needed tools to analyze the bitcoin market. I found t
 
 To install the the application with the required dependencies, simply run the ```npm run install:build:all``` at root of project (main package.json)
 
-It will also compile all TypeScript-files and create build from client which are required if you run program in production mode locally.
+It will also compile all TypeScript files and create build from client which are required if you run program in production mode locally.
 
 - - -
 
@@ -26,14 +26,14 @@ Ports are set inline in projects. Default port for server is **8000** and for cl
 
 Client proxy and port configures are located at ```client/vue.config.js```
 
-Server port can be se at ```server/utils/config.ts```
+Server port can be se at ```server/utils/config.ts``` or create .env file on server root with content ```PORT=<port>```
 
 - - -
 
 ### Single terminal dev mode
 
 Starting whole application in develop mode, execute at root (main package.json) ```npm run dev```
-Application will start in one terminal with concurrently dependency. This should shouldn't be OS system related. Tested in Win 10 & Linux Mint and worked fine
+Application will start in one terminal with concurrently dependency. This should not be OS system related. Tested in Win 10 & Linux Mint and worked fine
 
 ### Seperated terminals
 
