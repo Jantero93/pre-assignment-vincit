@@ -2,6 +2,8 @@
 
 Heroku: https://aqueous-inlet-22560.herokuapp.com/
 
+Rising Star Pre-assignment: https://vincit.fi/risingstar/Vincit-Rising-Star-2021-Pre-assignment.pdf
+
 - - -
 
 ## Description
